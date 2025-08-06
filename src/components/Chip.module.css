@@ -1,0 +1,17 @@
+/* components/Chip.module.css */
+.chip {
+  display: inline-flex; /* Make it inline-flex so it doesn't take full space */
+  align-items: center;
+  padding: 2px 6px; /* Reduced padding for a smaller appearance */
+  background-color: #ffffff; /* White background */
+  border: 1px solid #000000; /* Black border */
+  border-radius: 12px; /* Slightly reduced border-radius for smaller size */
+  margin-right: 10px; /* Adjusted margin */
+  font-size: 12px; /* Smaller font size */
+}
+
+.icon {
+  width: 16px; /* Slightly smaller icon */
+  height: 16px; /* Slightly smaller icon */
+  margin-right: 4px; /* Keeping small space between icon and text */
+}

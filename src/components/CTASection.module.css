@@ -1,0 +1,52 @@
+/* src/components/CTASection.module.css */
+
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  background-color: var(--primary-colour); /* Use primary colour from CSS variables */
+  color: #fff; /* Ensure text is readable against the primary background */
+}
+
+.heading {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.subtitle {
+  font-size: 18px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #fff; /* Ensure subtitle text is readable */
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.ctaButton {
+  padding: 15px 30px;
+  font-size: 18px;
+  background-color: #fff; /* White background */
+  color: var(--primary-colour); /* Primary colour text */
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-weight: bold;
+}
+
+.ctaButton:hover {
+  background-color: var(--primary-hover-colour); /* Use primary hover colour */
+  color: #fff; /* White text on hover */
+}
+
+/* Accessibility: Focus States */
+.heading:focus,
+.subtitle:focus,
+.ctaButton:focus {
+  outline: 2px solid #fff; /* White outline for focus */
+  outline-offset: 2px;
+}

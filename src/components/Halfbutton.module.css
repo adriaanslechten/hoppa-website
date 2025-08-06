@@ -1,0 +1,41 @@
+/* components/HalfButton.module.css */
+
+.bold {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.normal {
+  color: white;
+  text-align: center;
+}
+
+.button {
+  background-color: #000; /* Black background for a sleek look */
+  color: white; /* White text for contrast */
+  border-radius: 10px; /* Default moderate rounding */
+  padding: 10px 20px; /* Padding for size */
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-out; /* Smooth transition for background color and press effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.button:hover {
+  background-color: #333; /* Darker grey when hovered for subtle interaction feedback */
+}
+
+.button:active {
+  background-color: #555; /* Even darker when pressed */
+  transform: translateY(2px); /* Slight push down effect to mimic button press */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Smaller shadow to enhance the pressed effect */
+}
+
+.rounded {
+  border-radius: 15px; /* Fully rounded edges like the chip when 'round' prop is true */
+  padding: 10px 10px; /* Adjust padding to match chip style */
+}

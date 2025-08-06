@@ -1,0 +1,36 @@
+/* components/Card.module.css */
+.card {
+  width: 300px; /* Fixed width for each card */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+  transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.card h2 {
+  color: #333;
+}
+
+.card p {
+  color: #666;
+}
+
+.card a {
+  color: #0077cc;
+  text-decoration: none;
+}
+
+.stats span {
+  display: inline-block;
+  margin-right: 15px;
+  color: #333;
+}

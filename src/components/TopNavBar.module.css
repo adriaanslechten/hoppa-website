@@ -1,0 +1,85 @@
+/* src/components/TopNavBar.module.css */
+
+.NavBar {
+  width: 100%;
+  background-color: var(--primary-colour); /* Primary color background */
+  height: 50px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.NavList {
+  list-style: none; /* Remove default list styling */
+  padding: 0;
+  margin: 0;
+  display: flex; /* Horizontal layout */
+  width: 100%;
+  margin-left: 30px;
+}
+
+.NavItem {
+  position: relative; /* Positioning context for dropdown */
+  margin-right: 20px;
+}
+
+.NavLink {
+  display: flex; /* Changed to flex to align icon and text (if any) */
+  align-items: center; /* Vertically center items */
+  padding: 15px 20px; /* Increased padding for better touch targets */
+  color: var(--background-white); /* White text for contrast */
+  text-decoration: none; /* Ensures no underline */
+  transition: background-color 0.2s ease-in-out; /* Smooth transition for hover effects */
+}
+
+.NavLink:hover,
+.NavLink:active {
+  background-color: var(--primary-hover-colour); /* Darker primary shade on hover */
+  color: var(--background-white); /* Maintain white text on hover */
+}
+
+.active {
+  background-color: var(--primary-hover-colour); /* Use hover color for active state */
+  color: var(--background-white); /* Maintain white text for active link */
+  font-weight: bold; /* Bold text for active link */
+}
+
+/* Dropdown styles */
+.DropdownMenu {
+  display: none; /* Hidden by default */
+  position: absolute; /* Positioned below the NavLink */
+  top: 100%; /* Positioned below the NavLink */
+  left: 0;
+  background-color: var(--background-white); /* White background for dropdown */
+  color: var(--text-colour); /* Black text for dropdown items */
+  z-index: 1001; /* Higher than NavBar */
+  list-style: none; /* Remove default list styling */
+  padding: 0;
+  margin: 0;
+  min-width: 200px; /* Optional: Ensure dropdown has a minimum width */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for depth */
+  border-radius: 4px; /* Optional: Rounded corners */
+}
+
+.DropdownItem {
+  padding: 10px 20px;
+}
+
+.DropdownItem .NavLink {
+  padding: 10px 20px; /* Ensure correct padding */
+  color: var(--text-colour); /* Black text for dropdown links */
+  background-color: var(--background-white); /* Ensure white background */
+}
+
+.DropdownItem .NavLink:hover,
+.DropdownItem .NavLink:active {
+  background-color: var(--grey); /* Light grey background on hover */
+  color: var(--black); /* Black text on hover */
+}
+
+.NavItem:hover .DropdownMenu {
+  display: block; /* Show the dropdown */
+}

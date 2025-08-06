@@ -1,0 +1,65 @@
+name: Deploy to Netlify
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run linting
+      run: npm run lint
+      continue-on-error: true
+
+    - name: Build Next.js app
+      run: npm run export
+
+    - name: Verify build output
+      run: |
+        echo "Checking if build output exists..."
+        ls -la out/
+        echo "Build completed successfully!"
+
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v3.0
+      with:
+        publish-dir: './out'
+        production-branch: main
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+    - name: Deployment Success
+      if: success()
+      run: |
+        echo "🚀 Deployment completed successfully!"
+        echo "Your site should be live at https://hoppa.fit/"
+
+    - name: Deployment Failed
+      if: failure()
+      run: |
+        echo "❌ Deployment failed. Please check the logs above."
+        echo "Common issues:"
+        echo "1. Check Netlify auth token in GitHub secrets"
+        echo "2. Verify Netlify site ID is correct"
+        echo "3. Ensure build completed successfully"

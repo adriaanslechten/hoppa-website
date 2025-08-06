@@ -1,0 +1,49 @@
+/* FooterSection.module.css */
+
+.footer {
+  padding: 40px 20px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+}
+
+.footerLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.footerLinks a {
+  color: #fff;
+  text-decoration: none;
+  margin: 5px 0;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.footerLinks a:hover {
+  color: #ff7e5f;
+}
+
+.socialLinks {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.socialLinks a img {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease;
+}
+
+.socialLinks a:hover img {
+  transform: scale(1.1);
+}
+
+.copyRight {
+  font-size: 14px;
+  color: #ccc;
+}

@@ -1,0 +1,142 @@
+/* global.css */
+
+@import url("https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background-color: #ffffff;
+  color: #333333;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* src/styles/global.css */
+/* src/styles/global.css */
+
+:root {
+  --background-white: #ffffff;
+  --shadow-colour: #000;
+  --lighter-background-colour: #f5f7fb;
+  --text-colour: #333;
+  --black: #000000;
+
+  /* Primary and Secondary Colors */
+  --primary-colour: #e83f6f;
+  --primary-hover-colour: #c7375a; /* Darker shade for hover */
+  --secondary-colour: #555555;
+
+  /* Additional Colors */
+  --recovery-colour: #dafaef;
+  --pose-colour: #ffa6a6;
+  --border-colour: #ddd;
+  --grey: #e0e0e0;
+  --medium-grey: #9e9d9d;
+  --yellow: #d1d166;
+  --light-grey: #f5f7fb;
+  --dark-grey: #555555;
+  --darker-grey: #333333;
+  --blue-grey: #dfe4ea;
+  --green-grey: #e6e6e6;
+  --light-green: #dcf6dc;
+
+  /* Flattened Nested Colors */
+  --stars-and-planets-black: #000000;
+  --stars-and-planets-grey: #333333;
+
+  --play-screen-light-grey: #f5f7fb;
+  --play-screen-no-camera-background: #000000;
+  --play-screen-no-camera-text: #ffffff;
+  --play-screen-transparent: rgba(255, 255, 255, 0.5);
+
+  --level-screen-completed: #6aa84f;
+
+  --exercise-overview-recovery: #a7dad8;
+  --exercise-overview-easy: #ffffff;
+  --exercise-overview-medium: #eae5e5;
+  --exercise-overview-hard: #e8dede;
+  --exercise-overview-harder: #cb9e9e;
+
+  --category-exercise: #ffffff;
+  --category-recovery: #e1f0f0;
+  --category-workout: #ebe0ef;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--background-white);
+  color: var(--text-colour);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}

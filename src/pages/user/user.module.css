@@ -1,0 +1,32 @@
+/* styles/User.module.css */
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 40px auto; /* Center the card and increase top and bottom margin */
+    width: 90%; /* Make use of more space */
+    max-width: 600px; /* Increase max width for better layout on larger screens */
+}
+
+.heading {
+    color: #333333; /* Darker color for better readability */
+    font-size: 24px; /* Increase font size */
+    margin: 10px 0 20px; /* Adjust spacing for visual separation */
+    font-weight: 600; /* Make heading bolder */
+}
+
+.text {
+    color: #555555; /* Darker grey for text for better readability */
+    font-size: 18px; /* Larger font size */
+    margin-bottom: 20px; /* Increase margin for better separation */
+}
+
+.backLink {
+    margin-top: 20px;
+    padding: 10px 15px; /* Padding for better touch area */
+}

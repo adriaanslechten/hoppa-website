@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    height: 100vh; /* Ensure the container takes full height */
+  }
+
+  .main {
+    flex-grow: 1; /* Allow the main content to grow and fill the remaining space */
+    padding: 20px;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+  }
