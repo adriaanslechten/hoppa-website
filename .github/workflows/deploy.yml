@@ -17,17 +17,17 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'
+        cache: 'yarn'
 
     - name: Install dependencies
-      run: npm ci
+      run: yarn install --frozen-lockfile
 
     - name: Run linting
-      run: npm run lint
+      run: yarn lint
       continue-on-error: true
 
     - name: Build Next.js app
-      run: npm run export
+      run: yarn export
 
     - name: Verify build output
       run: |
@@ -48,18 +48,4 @@ jobs:
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-
-    - name: Deployment Success
-      if: success()
-      run: |
-        echo "🚀 Deployment completed successfully!"
-        echo "Your site should be live at https://hoppa.fit/"
-
-    - name: Deployment Failed
-      if: failure()
-      run: |
-        echo "❌ Deployment failed. Please check the logs above."
-        echo "Common issues:"
-        echo "1. Check Netlify auth token in GitHub secrets"
-        echo "2. Verify Netlify site ID is correct"
-        echo "3. Ensure build completed successfully"
+      timeout-minutes: 10
