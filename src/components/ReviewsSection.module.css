@@ -1,52 +1,106 @@
 /* src/components/ReviewsSection.module.css */
 
 .reviews {
-  padding: 60px 20px;
+  padding: 40px 16px;
   background-color: #f9f9f9;
   text-align: center;
 }
 
 .heading {
-  font-size: 36px;
-  margin-bottom: 40px;
+  font-size: 24px;
+  margin-bottom: 32px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   color: #333;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .reviews {
+    padding: 60px 20px;
+  }
+
+  .heading {
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
 }
 
 .carousel {
   display: flex;
-  overflow-x: auto; /* Changed from scroll to auto for better UX */
-  gap: 20px;
-  padding-bottom: 20px;
-  justify-content: center; /* Center the review items */
-  scroll-behavior: smooth; /* Smooth scrolling */
+  overflow-x: auto;
+  gap: 16px;
+  padding: 0 16px 20px 16px;
+  justify-content: flex-start;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 768px) {
+  .carousel {
+    gap: 20px;
+    padding: 0 0 20px 0;
+    justify-content: center;
+  }
 }
 
 .reviewItem {
-  flex: 0 0 350px; /* Increased from 300px to 350px for taller cards */
+  flex: 0 0 280px;
   background-color: #fff;
-  padding: 40px 25px; /* Increased padding for taller appearance */
-  border-radius: 15px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  padding: 24px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 200px;
+}
+
+@media (min-width: 768px) {
+  .reviewItem {
+    flex: 0 0 350px;
+    padding: 40px 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .reviewContent {
-  font-size: 16px;
+  font-size: 14px;
   color: #555;
-  margin-bottom: 20px;
-  line-height: 1.6;
+  margin-bottom: 16px;
+  line-height: 1.5;
   font-family: "Helvetica Neue", Arial, sans-serif;
+  flex-grow: 1;
 }
 
 .author {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   color: #2f2f2f;
   font-family: "Helvetica Neue", Arial, sans-serif;
+  margin-bottom: 8px;
+}
+
+.rating {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+@media (min-width: 768px) {
+  .reviewContent {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .author {
+    font-size: 18px;
+  }
+
+  .rating {
+    font-size: 16px;
+  }
 }
 
 /* Scrollbar Styling */

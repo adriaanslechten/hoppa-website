@@ -136,6 +136,5 @@ You may not assign your rights or obligations under these Terms without our prio
 If you have any questions about these Terms, please contact us at:
 
 - **Email**: [contact@hoppa.com](mailto:contact@hoppa.com)
-- **Address**: [Your Company's Address], Sweden
 
 ---

@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 60px 20px;
+  padding: 40px 16px;
   background-color: #f9f9f9;
 }
 
@@ -30,10 +30,17 @@
 }
 
 .image {
-  max-width: 40%;
+  width: 100%;
+  max-width: 300px;
   height: auto;
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+  .image {
+    max-width: 40%;
+  }
 }
 
 .content {
@@ -48,18 +55,31 @@
 }
 
 .heading {
-  font-size: 36px;
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  color: var(--text-colour); /* Use CSS variable for text color */
+  color: var(--text-colour);
+  line-height: 1.2;
 }
 
 .description {
-  font-size: 18px;
-  margin-bottom: 30px;
+  font-size: 16px;
+  margin-bottom: 24px;
   line-height: 1.6;
-  color: var(--text-colour); /* Use CSS variable for text color */
+  color: var(--text-colour);
+}
+
+@media (min-width: 768px) {
+  .heading {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  .description {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
 }
 
 /* Removed .downloadButton since using custom Button component */

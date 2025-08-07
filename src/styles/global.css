@@ -2,12 +2,24 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;600;700&display=swap");
 
+html {
+  /* Prevent scroll bounce showing white background */
+  overflow: hidden;
+  height: 100%;
+  background-color: #333333; /* Dark fallback color */
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: "Helvetica Neue", Arial, sans-serif;
   background-color: #ffffff;
   color: #333333;
+  /* Re-enable scrolling on body */
+  overflow: auto;
+  height: 100%;
+  /* Prevent bounce scrolling */
+  overscroll-behavior: none;
 }
 
 h1,
@@ -97,46 +109,3 @@ ul {
   --category-workout: #ebe0ef;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  background-color: var(--background-white);
-  color: var(--text-colour);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-}
-
-p {
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  font-family: "Helvetica Neue", Arial, sans-serif;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-* {
-  box-sizing: border-box;
-}

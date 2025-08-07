@@ -1,8 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import styles from "./FeaturesSection.module.css";
-import Button from "./Button"; // Ensure the path is correct
-import featuresImage from "/public/overview_section.jpg"; // Adjust the path as needed
+import Button from "./Button";
 
 const FeaturesSection: React.FC = () => {
   const features = [
@@ -63,11 +62,10 @@ const FeaturesSection: React.FC = () => {
       </div>
       <div className={styles.rightImage}>
         <Image
-          src={featuresImage}
+          src="/overview_section.jpg"
           alt="Features Overview"
-          layout="responsive"
-          width={500} // Adjust based on actual image dimensions
-          height={400} // Adjust based on actual image dimensions
+          width={500}
+          height={400}
           className={styles.image}
         />
       </div>

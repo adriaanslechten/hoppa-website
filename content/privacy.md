@@ -35,9 +35,15 @@ We may collect non-personal information about the device you use to access the S
 
 - **Device Type and Operating System**
 
-### 2.4 No Cookies or Tracking Technologies
+### 2.4 Analytics and Performance Data
 
-Our Service does **not** use cookies or similar tracking technologies to collect information about your browsing activities on other websites or services.
+We may collect non-personal technical information to improve our Service, including:
+
+- **App Performance Data**: Crash reports and error logs to identify and fix technical issues
+- **Usage Analytics**: Anonymized data about how users interact with features to improve user experience
+- **Device Performance**: Technical metrics to optimize app performance across different devices
+
+This data is collected in an anonymized format and cannot be used to identify individual users.
 
 ---
 
@@ -49,6 +55,7 @@ We use the collected data for the following purposes:
 - **To Personalize Your Experience**: Tailoring workouts and exercises to your fitness level and goals.
 - **To Monitor Progress**: Tracking your exercise performance to display your progress over time.
 - **To Communicate with You**: Sending necessary notifications related to the Service (e.g., updates, changes).
+- **To Improve the Service**: Using anonymized analytics and crash reports to identify issues and enhance user experience.
 
 We do **not** use your data for advertising or marketing purposes unless you have explicitly opted in.
 
@@ -70,6 +77,7 @@ We retain your personal data only for as long as necessary to fulfill the purpos
 
 - **Account Data**: Retained until you delete your account or withdraw consent.
 - **Exercise and Performance Data**: Retained to provide you with historical progress unless you request deletion.
+- **Analytics and Technical Data**: Anonymized data may be retained for up to 2 years to improve the Service.
 
 ---
 
@@ -97,8 +105,10 @@ We may disclose your personal data in the good faith belief that such action is 
 We may employ third-party companies to facilitate our Service ("Service Providers"), such as:
 
 - **Cloud Storage Providers**: For data hosting and storage.
+- **Analytics Services**: For anonymized usage analytics and performance monitoring.
+- **Crash Reporting Services**: For identifying and fixing technical issues.
 
-These third parties have access to your personal data only to perform tasks on our behalf and are obligated not to disclose or use it for any other purpose.
+These third parties have access to your data only to perform tasks on our behalf and are obligated not to disclose or use it for any other purpose. Analytics and crash reporting data is processed in an anonymized format that cannot identify individual users.
 
 ---
 
@@ -155,7 +165,6 @@ We may update our Privacy Policy from time to time:
 If you have any questions about this Privacy Policy, please contact us:
 
 - **Email**: [contact@hoppa.com](mailto:contact@hoppa.com)
-- **Address**: [Your Company's Address], Sweden
 
 ---
 

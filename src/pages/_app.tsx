@@ -1,7 +1,7 @@
 import React from "react";
 import { AppProps } from "next/app";
 import RootLayout from "./layout";
-import "../styles/global.css"; // Ensure this path is correct
+import "../styles/global.css";
 
 function App({ Component, pageProps }: AppProps) {
   return (
