@@ -2,7 +2,7 @@
 
 .NavBar {
   width: 100%;
-  background-color: var(--primary-colour);
+  background: linear-gradient(135deg, #fef9e7 0%, #f9f1d0 100%);
   height: 60px;
   display: flex;
   align-items: center;
@@ -39,7 +39,7 @@
   display: flex;
   align-items: center;
   padding: 12px 16px;
-  color: var(--background-white);
+  color: #1a1a1a;
   text-decoration: none;
   transition: background-color 0.2s ease-in-out;
   font-size: 14px;
@@ -59,13 +59,13 @@
 
 .NavLink:hover,
 .NavLink:active {
-  background-color: var(--primary-hover-colour); /* Darker primary shade on hover */
-  color: var(--background-white); /* Maintain white text on hover */
+  background-color: var(--primary-colour); /* Primary color on hover */
+  color: var(--background-white); /* White text on hover */
 }
 
 .active {
-  background-color: var(--primary-hover-colour); /* Use hover color for active state */
-  color: var(--background-white); /* Maintain white text for active link */
+  background-color: var(--primary-colour); /* Primary color for active state */
+  color: var(--background-white); /* White text for active link */
   font-weight: bold; /* Bold text for active link */
 }
 
