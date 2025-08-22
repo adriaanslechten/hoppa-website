@@ -82,4 +82,14 @@
   }
 }
 
-/* Removed .downloadButton since using custom Button component */
+/* Button container for proper alignment */
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .buttonContainer {
+    justify-content: flex-start;
+  }
+}

@@ -19,12 +19,14 @@ const AppOverviewSection: React.FC = () => {
           Hoppa brings personalized workouts and real-time coaching right to your smartphone. Leverage AI-powered pose
           detection and gamified routines to stay motivated and on track.
         </p>
-        <Button
-          onPress={() => {
-            /* Define your download action here */
-          }}
-          title="Download Now"
-        />
+        <div className={styles.buttonContainer}>
+          <Button
+            onPress={() => {
+              /* Define your download action here */
+            }}
+            title="Download Now"
+          />
+        </div>
       </div>
     </section>
   );

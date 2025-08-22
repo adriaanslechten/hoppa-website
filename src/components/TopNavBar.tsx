@@ -19,7 +19,8 @@ const TopNavBar: React.FC = () => {
           <li className={styles.NavItem}>
             <Link href="/terms" passHref>
               <div className={`${styles.NavLink} ${router.pathname === "/terms" ? styles.active : ""}`}>
-                Terms and Privacy
+                <span className={styles.NavLabelDesktop}>Terms and Privacy</span>
+                <span className={styles.NavLabelMobile}>Legal</span>
               </div>
             </Link>
             <ul className={styles.DropdownMenu}>
@@ -38,7 +39,8 @@ const TopNavBar: React.FC = () => {
           <li className={styles.NavItem}>
             <Link href="/login" passHref>
               <div className={styles.CtaButton} aria-label="Sign up now">
-                Sign up now
+                <span className={styles.NavLabelDesktop}>Sign up now</span>
+                <span className={styles.NavLabelMobile}>Sign up</span>
               </div>
             </Link>
           </li>

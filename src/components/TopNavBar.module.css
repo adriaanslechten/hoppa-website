@@ -101,11 +101,63 @@
   font-weight: 700;
   border: 2px solid #111111;
   transition: transform 0.15s ease, background-color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .CtaButton:hover {
   transform: translateY(-1px);
   background-color: #000000;
+}
+
+/* Responsive text labels */
+.NavLabelMobile {
+  display: inline;
+}
+
+.NavLabelDesktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .NavLabelMobile {
+    display: none;
+  }
+
+  .NavLabelDesktop {
+    display: inline;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+  .NavBar {
+    height: 64px;
+  }
+
+  .NavInner {
+    padding: 0 12px;
+  }
+
+  .Brand {
+    font-size: 22px;
+  }
+
+  .NavItem {
+    margin-right: 8px;
+  }
+
+  .NavLink {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .CtaButton {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
 }
 
 /* Dropdown styles */
