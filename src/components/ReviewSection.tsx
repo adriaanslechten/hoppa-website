@@ -17,7 +17,7 @@ const ReviewsSection: React.FC = () => {
         <p className={styles.subtagline}>The best way to build a habit — and it's fun too!</p>
       </div>
       <div className={styles.reel} aria-hidden="true">
-        <div className={styles.track} style={{ ["--duration" as any]: "35s" }}>
+        <div className={styles.track}>
           {looped.map((testimonial, index) => {
             const variantClass = [styles.itemSm, styles.itemMd, styles.itemLg][index % 3];
             return (

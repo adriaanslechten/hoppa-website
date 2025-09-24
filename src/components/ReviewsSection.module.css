@@ -69,6 +69,7 @@
   gap: 16px;
   width: max-content;
   padding: 0 8px 6px 8px;
+  --duration: 35s; /* desktop default speed */
   animation: marquee var(--duration, 40s) linear infinite;
 }
 
@@ -99,6 +100,13 @@
   .track {
     gap: 20px;
     padding: 0 0 20px 0;
+  }
+}
+
+/* Slow down marquee on mobile (double duration) */
+@media (max-width: 767px) {
+  .track {
+    --duration: 60s;
   }
 }
 

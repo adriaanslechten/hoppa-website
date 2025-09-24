@@ -141,6 +141,14 @@
   }
 }
 
+/* Add extra horizontal breathing room for cards on mobile only */
+@media (max-width: 767px) {
+  .featuresGrid {
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+}
+
 @media (min-width: 768px) {
   .featuresGrid {
     grid-template-columns: 1fr 1fr 1fr;
