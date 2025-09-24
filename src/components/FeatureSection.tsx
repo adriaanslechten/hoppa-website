@@ -32,8 +32,8 @@ const FeaturesSection: React.FC = () => {
     },
   ];
 
-  const { ref: sectionRef, inView: sectionInView } = useInView({ rootMargin: "-15% 0px" });
-  const { ref: imageRef, inView: imageInView } = useInView({ rootMargin: "-10% 0px" });
+  const { ref: sectionRef, inView: sectionInView } = useInView<HTMLElement>({ rootMargin: "-15% 0px" });
+  const { ref: imageRef, inView: imageInView } = useInView<HTMLDivElement>({ rootMargin: "-10% 0px" });
 
   return (
     <section ref={sectionRef} className={styles.features} aria-labelledby="features-heading">
@@ -55,7 +55,10 @@ const FeaturesSection: React.FC = () => {
           ))}
         </div>
       </div>
-      <div ref={imageRef} className={`${styles.rightImage} ${imageInView ? styles.revealRight : styles.hiddenRight}`}>
+      <div
+        ref={imageRef as unknown as React.RefObject<HTMLDivElement>}
+        className={`${styles.rightImage} ${imageInView ? styles.revealRight : styles.hiddenRight}`}
+      >
         <Image
           src="/feature-section.jpg"
           alt="Features Overview"
