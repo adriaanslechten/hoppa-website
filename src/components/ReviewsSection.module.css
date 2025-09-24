@@ -106,7 +106,7 @@
 /* Slow down marquee on mobile (double duration) */
 @media (max-width: 767px) {
   .track {
-    --duration: 60s;
+    --duration: 70s;
   }
 }
 
