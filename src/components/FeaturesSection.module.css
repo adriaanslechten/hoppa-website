@@ -8,6 +8,40 @@
   background-color: #fff;
 }
 
+/* Motion primitives (subtle) */
+.hidden {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.reveal {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+
+.hiddenRight {
+  opacity: 0;
+  transform: translateX(24px);
+}
+
+.revealRight {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hidden,
+  .reveal,
+  .hiddenRight,
+  .revealRight {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 @media (min-width: 768px) {
   .features {
     flex-direction: row;

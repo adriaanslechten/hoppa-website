@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import styles from "./FeaturesSection.module.css";
 import Button from "./Button";
+import { useInView } from "../hooks/useInView";
 
 const FeaturesSection: React.FC = () => {
   const features = [
@@ -31,43 +32,31 @@ const FeaturesSection: React.FC = () => {
     },
   ];
 
+  const { ref: sectionRef, inView: sectionInView } = useInView({ rootMargin: "-15% 0px" });
+  const { ref: imageRef, inView: imageInView } = useInView({ rootMargin: "-10% 0px" });
+
   return (
-    <section className={styles.features} aria-labelledby="features-heading">
-      <div className={styles.leftContent}>
+    <section ref={sectionRef} className={styles.features} aria-labelledby="features-heading">
+      <div className={`${styles.leftContent} ${sectionInView ? styles.reveal : styles.hidden}`}>
         <h2 id="features-heading" className={styles.heading}>
           Discover Our Key Features
         </h2>
         <p className={styles.subtitle}>Designed to help you achieve your fitness goals with ease and efficiency.</p>
         <div className={styles.featuresGrid}>
           {features.map((feature, index) => (
-            <div className={styles.featureItem} key={index}>
-              {/* If using images/icons for features, uncomment and adjust accordingly */}
-              {/* <Image
-                src={feature.image}
-                alt={`${feature.title} Icon`}
-                width={80}
-                height={80}
-                className={styles.featureImage}
-              /> */}
+            <div
+              className={`${styles.featureItem} ${sectionInView ? styles.reveal : styles.hidden}`}
+              style={{ transitionDelay: `${index * 90}ms` }}
+              key={index}
+            >
               <h3 className={styles.featureTitle}>{feature.title}</h3>
               <p className={styles.featureDescription}>{feature.description}</p>
             </div>
           ))}
         </div>
-        {/* <Button
-          onPress={() => {
-          }}
-          title="Learn More"
-        /> */}
       </div>
-      <div className={styles.rightImage}>
-        <Image
-          src="/overview_section.jpg"
-          alt="Features Overview"
-          width={500}
-          height={400}
-          className={styles.image}
-        />
+      <div ref={imageRef} className={`${styles.rightImage} ${imageInView ? styles.revealRight : styles.hiddenRight}`}>
+        <Image src="/overview_section.jpg" alt="Features Overview" width={500} height={400} className={styles.image} />
       </div>
     </section>
   );

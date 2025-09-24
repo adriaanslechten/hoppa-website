@@ -4,15 +4,19 @@ import React from "react";
 import Image from "next/image";
 import styles from "./AppOverviewSection.module.css";
 import Button from "./Button";
+import { useInView } from "../hooks/useInView";
 
 const AppOverviewSection: React.FC = () => {
+  const { ref: imageRef, inView: imageInView } = useInView({ rootMargin: "-15% 0px" });
+  const { ref: contentRef, inView: contentInView } = useInView({ rootMargin: "-15% 0px" });
+
   return (
     <section className={styles.appOverview} aria-labelledby="app-overview-heading">
-      <div className={styles.imageContainer}>
+      <div ref={imageRef} className={`${styles.imageContainer} ${imageInView ? styles.reveal : styles.hidden}`}>
         <Image src="/yoga.jpg" alt="Hoppa App Overview" width={500} height={400} className={styles.image} />
       </div>
-      <div className={styles.content}>
-        <h2 id="app-overview-heading" className={styles.heading}>
+      <div ref={contentRef} className={`${styles.content} ${contentInView ? styles.reveal : styles.hidden}`}>
+        <h2 id="app-overview-heading" className={`${styles.heading} ${styles.headingAccent}`}>
           Transform Your Fitness Journey with Hoppa
         </h2>
         <p className={styles.description}>
