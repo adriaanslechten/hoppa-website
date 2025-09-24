@@ -56,7 +56,14 @@ const FeaturesSection: React.FC = () => {
         </div>
       </div>
       <div ref={imageRef} className={`${styles.rightImage} ${imageInView ? styles.revealRight : styles.hiddenRight}`}>
-        <Image src="/overview_section.jpg" alt="Features Overview" width={500} height={400} className={styles.image} />
+        <Image
+          src="/feature-section.jpg"
+          alt="Features Overview"
+          width={250}
+          height={250}
+          sizes="(min-width: 100px) 50vw, (min-width: 300px) 70vw, 90vw"
+          className={styles.image}
+        />
       </div>
     </section>
   );

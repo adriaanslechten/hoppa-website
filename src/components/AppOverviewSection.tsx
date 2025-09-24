@@ -9,7 +9,14 @@ const AppOverviewSection: React.FC = () => {
   return (
     <section className={styles.appOverview} aria-labelledby="app-overview-heading">
       <div className={styles.imageContainer}>
-        <Image src="/yoga.jpg" alt="Hoppa App Overview" width={500} height={400} className={styles.image} />
+        <Image
+          src="/overview-section.png"
+          alt="Hoppa App Overview"
+          width={300}
+          height={300}
+          sizes="(min-width: 100px) 50vw, (min-width: 300px) 70vw, 90vw"
+          className={styles.image}
+        />
       </div>
       <div className={styles.content}>
         <h2 id="app-overview-heading" className={styles.heading}>

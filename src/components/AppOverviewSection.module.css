@@ -12,7 +12,14 @@
   .appOverview {
     flex-direction: row;
     justify-content: center; /* Center content horizontally */
-    padding: 100px 40px;
+    padding: 24px 40px;
+  }
+}
+
+/* Ensure a minimum gap on medium screens */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .appOverview {
+    gap: 48px;
   }
 }
 
@@ -22,25 +29,26 @@
   margin-bottom: 30px;
 }
 
+/* Image sizing: keep desktop intrinsic size, shrink only on small screens */
+.image {
+  height: auto;
+}
+
+@media (max-width: 767px) {
+  .image {
+    width: 85vw;
+    max-width: 200px;
+  }
+}
+
 @media (min-width: 768px) {
   .imageContainer {
     margin-bottom: 0;
-    padding-right: 40px;
   }
-}
-
-.image {
-  width: 100%;
-  max-width: 300px;
-  height: auto;
-  border-radius: 15px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-@media (min-width: 768px) {
   .image {
-    max-width: 40%;
+    min-width: 200px;
   }
+  /* No desktop scaling; rely on intrinsic width/height from the component */
 }
 
 .content {
