@@ -1,15 +1,26 @@
 // src/components/NavBar.tsx
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import styles from "./TopNavBar.module.css";
 
 const TopNavBar: React.FC = () => {
   const router = useRouter();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 8);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className={styles.NavBar}>
+    <nav className={`${styles.NavBar} ${isScrolled ? styles.scrolled : styles.atTop}`}>
       <div className={styles.NavInner}>
         <Link href="/" passHref>
           <div className={styles.Brand}>Hoppa</div>

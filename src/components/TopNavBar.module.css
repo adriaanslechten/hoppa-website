@@ -10,6 +10,22 @@
   top: 0;
   left: 0;
   z-index: 1000;
+  transition: background-color 200ms ease, box-shadow 200ms ease, backdrop-filter 200ms ease,
+    -webkit-backdrop-filter 200ms ease, opacity 200ms ease;
+}
+
+.atTop {
+  background: linear-gradient(135deg, rgba(254, 249, 231, 0.75) 0%, rgba(249, 241, 208, 0.75) 100%);
+  backdrop-filter: saturate(180%) blur(10px);
+  -webkit-backdrop-filter: saturate(180%) blur(10px);
+  box-shadow: none;
+}
+
+.scrolled {
+  background: linear-gradient(135deg, #fef9e7 0%, #f9f1d0 100%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 .NavInner {
