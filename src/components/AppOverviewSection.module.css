@@ -8,27 +8,6 @@
   background-color: #f9f9f9;
 }
 
-/* Motion primitives */
-.hidden {
-  opacity: 0;
-  transform: translateY(18px);
-}
-
-.reveal {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 700ms ease, transform 700ms ease;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hidden,
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-
 @media (min-width: 768px) {
   .appOverview {
     flex-direction: row;
@@ -56,7 +35,6 @@
   height: auto;
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  transition: transform 600ms ease, filter 600ms ease;
 }
 
 @media (min-width: 768px) {
@@ -83,23 +61,6 @@
   font-family: "Helvetica Neue", Arial, sans-serif;
   color: var(--text-colour);
   line-height: 1.2;
-}
-
-.headingAccent {
-  position: relative;
-}
-
-.headingAccent::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -10px;
-  width: 72px;
-  height: 6px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--primary-colour), var(--primary-hover-colour));
-  opacity: 0.25;
 }
 
 .description {

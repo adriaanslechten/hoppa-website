@@ -25,21 +25,46 @@
   }
 }
 
-.carousel {
+/* Marquee reel (infinite scroll) */
+.reel {
+  overflow: hidden;
+}
+
+.track {
   display: flex;
-  overflow-x: auto;
   gap: 16px;
-  padding: 0 16px 20px 16px;
-  justify-content: flex-start;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+  width: max-content;
+  padding: 0 8px 6px 8px;
+  animation: marquee var(--duration, 40s) linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause on hover for desktop */
+@media (hover: hover) and (pointer: fine) {
+  .reel:hover .track {
+    animation-play-state: paused;
+  }
+}
+
+/* Reduced motion: fall back to manual scroll */
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
 }
 
 @media (min-width: 768px) {
-  .carousel {
+  .track {
     gap: 20px;
     padding: 0 0 20px 0;
-    justify-content: center;
   }
 }
 
@@ -52,8 +77,16 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  text-align: center;
   min-height: 200px;
+}
+
+.reviewInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -104,21 +137,21 @@
 }
 
 /* Scrollbar Styling */
-.carousel::-webkit-scrollbar {
+.reel::-webkit-scrollbar {
   height: 8px;
 }
 
-.carousel::-webkit-scrollbar-track {
+.reel::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 10px;
 }
 
-.carousel::-webkit-scrollbar-thumb {
+.reel::-webkit-scrollbar-thumb {
   background: #2f2f2f;
   border-radius: 10px;
 }
 
-.carousel::-webkit-scrollbar-thumb:hover {
+.reel::-webkit-scrollbar-thumb:hover {
   background: #2f2f2f;
 }
 
