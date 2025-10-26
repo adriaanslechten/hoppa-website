@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="Hoppa Fitness" />
-        <link rel="canonical" href="https://hoppa-fitness.com" />
+        <link rel="canonical" href="https://hoppa.fit" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           content="Transform your fitness journey with AI-powered pose detection, gamified workouts, and personalized training."
         />
         <meta property="og:image" content="/hero-image.jpg" />
-        <meta property="og:url" content="https://hoppa-fitness.com" />
+        <meta property="og:url" content="https://hoppa.fit" />
         <meta property="og:site_name" content="Hoppa" />
 
         {/* Twitter */}

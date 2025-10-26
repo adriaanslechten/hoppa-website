@@ -1,0 +1,725 @@
+.Container {
+  width: 100vw;
+  margin: 0;
+  margin-left: calc(-50vw + 50%);
+  padding: 120px 20px 60px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fef9e7 0%, #f9f1d0 100%);
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Organic background shapes */
+.Container::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  right: -10%;
+  width: 50%;
+  height: 80%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(244, 208, 63, 0.2) 100%);
+  border-radius: 50% 20% 45% 25%;
+  transform: rotate(-15deg);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.Container::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -15%;
+  width: 40%;
+  height: 60%;
+  background: linear-gradient(225deg, rgba(232, 63, 111, 0.08) 0%, rgba(255, 255, 255, 0.15) 100%);
+  border-radius: 40% 60% 30% 70%;
+  transform: rotate(25deg);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.Header {
+  text-align: center;
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.Badge {
+  display: inline-block;
+  background: #f4d03f;
+  color: #1a1a1a;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.Title {
+  font-size: 56px;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.Subtitle {
+  font-size: 20px;
+  color: #333;
+  font-weight: 400;
+}
+
+.Actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  gap: 16px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.SortButtons {
+  display: flex;
+  gap: 12px;
+}
+
+.SortButton {
+  padding: 10px 24px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #1a1a1a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.SortButton:hover {
+  background: white;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-color: rgba(232, 63, 111, 0.3);
+}
+
+.SortButton.active {
+  background: linear-gradient(135deg, #e83f6f 0%, #ff6b9d 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(232, 63, 111, 0.2);
+  transform: translateY(-2px);
+}
+
+.CreateButton {
+  padding: 12px 28px;
+  background: var(--primary-colour);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(232, 63, 111, 0.15);
+  letter-spacing: 0.3px;
+}
+
+.CreateButton:hover {
+  background: var(--primary-hover-colour);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(232, 63, 111, 0.2);
+}
+
+.Error {
+  background: #fee;
+  border: 1px solid #fcc;
+  color: #c33;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.Loading {
+  text-align: center;
+  padding: 48px 20px;
+  color: #666;
+  font-size: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+.Empty {
+  text-align: center;
+  padding: 48px 40px;
+  color: #666;
+  font-size: 16px;
+}
+
+.TopicsList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.TopicCard {
+  display: flex;
+  gap: 24px;
+  padding: 28px 32px;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.TopicCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #f4d03f 0%, #f0c929 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.TopicCard:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.TopicCard:hover::before {
+  opacity: 1;
+}
+
+.TopicVotes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 60px;
+  padding: 12px 10px;
+  background: linear-gradient(135deg, #e83f6f 0%, #ff6b9d 100%);
+  border-radius: 20px;
+}
+
+.VoteCount {
+  font-size: 28px;
+  font-weight: 900;
+  color: white;
+  line-height: 1;
+}
+
+.VoteLabel {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.TopicContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.TopicTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.TopicPreview {
+  color: #333;
+  margin-bottom: 14px;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.TopicMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #666;
+}
+
+.Edited {
+  color: #666;
+  font-style: italic;
+}
+
+/* Modal styles */
+.Modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.ModalContent {
+  background: #fef9e7;
+  padding: 48px;
+  border-radius: 28px;
+  max-width: 650px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  position: relative;
+}
+
+.ModalTitle {
+  font-size: 32px;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin-bottom: 28px;
+  line-height: 1.2;
+}
+
+.InputGroup {
+  margin-bottom: 20px;
+}
+
+.Label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-colour);
+  margin-bottom: 8px;
+}
+
+.Input,
+.Textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border-colour);
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.Input:focus,
+.Textarea:focus {
+  outline: none;
+  border-color: var(--primary-colour);
+  box-shadow: 0 0 0 2px rgba(232, 63, 111, 0.08);
+}
+
+.Input:disabled,
+.Textarea:disabled {
+  background: var(--light-grey);
+  cursor: not-allowed;
+}
+
+.Textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.ModalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.CancelButton {
+  padding: 12px 24px;
+  background: white;
+  border: 2px solid var(--border-colour);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.CancelButton:hover:not(:disabled) {
+  border-color: var(--medium-grey);
+}
+
+.CancelButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.SubmitButton {
+  padding: 14px 32px;
+  background: #f4d03f;
+  color: #1a1a1a;
+  border: none;
+  border-radius: 25px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(244, 208, 63, 0.3);
+  font-size: 15px;
+  letter-spacing: 0.3px;
+}
+
+.SubmitButton:hover:not(:disabled) {
+  background: #f0c929;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(244, 208, 63, 0.4);
+}
+
+.SubmitButton:disabled {
+  background: #d0d0d0;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+/* Topic Detail Page */
+.BackLink {
+  display: inline-flex;
+  align-items: center;
+  color: #666;
+  font-weight: 500;
+  margin-bottom: 32px;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.BackLink:hover {
+  color: var(--primary-colour);
+  transform: translateX(-2px);
+}
+
+.BackLink::before {
+  content: "← ";
+  margin-right: 6px;
+}
+
+.TopicDetail {
+  max-width: 800px;
+  margin: 0 auto 32px;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  position: relative;
+  z-index: 1;
+}
+
+.TopicDetailHeader {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+  align-items: flex-start;
+}
+
+.VoteSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #e83f6f 0%, #ff6b9d 100%);
+  padding: 12px 10px;
+  border-radius: 20px;
+  min-width: 60px;
+}
+
+.VoteButton {
+  background: white;
+  border: none;
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--primary-colour);
+}
+
+.VoteButton:hover:not(:disabled) {
+  transform: scale(1.05);
+  background: #fafafa;
+}
+
+.VoteButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.VoteSection .VoteCount {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  line-height: 1;
+  margin: 2px 0;
+}
+
+.TopicDetailContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.TopicDetailTitle {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+}
+
+.TopicBody {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.TopicText {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #444;
+  white-space: pre-wrap;
+  font-weight: 400;
+}
+
+/* Comments Section */
+.CommentsSection {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  position: relative;
+  z-index: 1;
+}
+
+.CommentsTitle {
+  font-size: 28px;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin-bottom: 28px;
+}
+
+.CommentForm {
+  margin-bottom: 32px;
+}
+
+.CommentInput {
+  width: 100%;
+  padding: 18px 20px;
+  border: 2px solid #e8e8e8;
+  border-radius: 16px;
+  font-size: 16px;
+  font-family: inherit;
+  resize: vertical;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+  background: #fafafa;
+}
+
+.CommentInput:focus {
+  outline: none;
+  border-color: var(--primary-colour);
+  box-shadow: 0 0 0 4px rgba(232, 63, 111, 0.1);
+  background: white;
+}
+
+.CommentInput:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.LoginPrompt {
+  padding: 20px;
+  text-align: center;
+  background: #f9f9f9;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 24px;
+}
+
+.LoginLink {
+  color: var(--primary-colour);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.LoginLink:hover {
+  text-decoration: underline;
+}
+
+.CommentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.CommentCard {
+  padding: 24px;
+  background: #fafafa;
+  border-radius: 16px;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.CommentCard:hover {
+  background: #f5f5f5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.CommentHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.CommentAuthor {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.CommentDate {
+  color: #888;
+}
+
+.CommentContent {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #333;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 768px) {
+  .Container {
+    padding: 100px 16px 40px;
+  }
+
+  .Title {
+    font-size: 38px;
+  }
+
+  .Subtitle {
+    font-size: 16px;
+  }
+
+  .Badge {
+    font-size: 11px;
+    padding: 6px 16px;
+  }
+
+  .Actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .SortButtons {
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .SortButton {
+    font-size: 14px;
+    padding: 8px 18px;
+  }
+
+  .CreateButton {
+    width: 100%;
+    text-align: center;
+  }
+
+  .TopicCard {
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .TopicVotes {
+    flex-direction: row;
+    min-width: auto;
+    justify-content: flex-start;
+    padding: 8px 12px;
+  }
+
+  .VoteCount {
+    font-size: 24px;
+  }
+
+  .TopicTitle {
+    font-size: 20px;
+  }
+
+  .ModalContent {
+    padding: 28px;
+  }
+
+  .ModalTitle {
+    font-size: 26px;
+  }
+
+  .TopicDetail {
+    padding: 24px;
+  }
+
+  .TopicDetailHeader {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .VoteSection {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .TopicDetailTitle {
+    font-size: 26px;
+  }
+
+  .TopicBody {
+    padding-left: 0;
+  }
+
+  .CommentsSection {
+    padding: 24px;
+  }
+
+  .CommentsTitle {
+    font-size: 24px;
+  }
+}
