@@ -11,10 +11,11 @@ const AppOverviewSection: React.FC = () => {
       <div className={styles.imageContainer}>
         <Image
           src="/overview-section.png"
-          alt="Hoppa App Overview"
+          alt="Hoppa mobile app interface showing workout tracking, progress calendar, and exercise campaigns"
           width={300}
           height={300}
           sizes="(min-width: 100px) 50vw, (min-width: 300px) 70vw, 90vw"
+          loading="lazy"
           className={styles.image}
         />
       </div>

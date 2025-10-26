@@ -1,0 +1,22 @@
+{
+    "name": "Hoppa - AI-Powered Fitness App",
+    "short_name": "Hoppa",
+    "description": "Transform your fitness journey with AI-powered pose detection, gamified workouts, and personalized training",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#e83f6f",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

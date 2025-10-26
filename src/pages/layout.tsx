@@ -18,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="Hoppa Fitness" />
+        <link rel="canonical" href="https://hoppa-fitness.com" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -45,6 +46,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 
+        {/* Web App Manifest */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#e83f6f" />
+
         {/* Structured Data - Organization */}
         <script
           type="application/ld+json"
@@ -60,11 +65,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 "@type": "Offer",
                 price: "0",
                 priceCurrency: "USD",
-              },
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: "4.9",
-                ratingCount: "50000",
               },
             }),
           }}

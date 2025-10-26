@@ -61,10 +61,11 @@ const FeaturesSection: React.FC = () => {
       >
         <Image
           src="/feature-section.jpg"
-          alt="Features Overview"
+          alt="Hoppa app displaying real-time pose detection during workout with skeleton tracking overlay"
           width={250}
           height={250}
           sizes="(min-width: 100px) 50vw, (min-width: 300px) 70vw, 90vw"
+          loading="lazy"
           className={styles.image}
         />
       </div>
