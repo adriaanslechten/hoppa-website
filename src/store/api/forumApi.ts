@@ -74,7 +74,7 @@ export const forumApi = createApi({
     getTopics: builder.query<Topic[], GetTopicsParams | void>({
       query: (params) => ({
         url: "/forum/topics",
-        params,
+        params: params || undefined,
       }),
       providesTags: (result) =>
         result

@@ -10,7 +10,7 @@ import {
   useCreateCommentMutation,
 } from "../../store/api/forumApi";
 import { getCommentDisplayName, formatDate } from "../../utils/forum";
-import { CommentCard } from "./components/CommentCard";
+import { CommentCard } from "../../components/forum/CommentCard";
 import styles from "./Forum.module.css";
 
 const TopicDetailPage: React.FC = () => {
@@ -111,7 +111,7 @@ const TopicDetailPage: React.FC = () => {
     headline: topic.title,
     text: topic.content,
     datePublished: topic.createdAt,
-    dateModified: topic.isEdited ? topic.updatedAt : topic.createdAt,
+    dateModified: topic.createdAt,
     author: {
       "@type": "Person",
       name: `User ${topic.userId.substring(0, 8)}`,
@@ -158,7 +158,6 @@ const TopicDetailPage: React.FC = () => {
         <meta property="og:image" content="https://hoppa.fit/forum-og-image.jpg" />
         <meta property="og:site_name" content="Hoppa" />
         <meta property="article:published_time" content={topic.createdAt} />
-        {topic.isEdited && <meta property="article:modified_time" content={topic.updatedAt} />}
         <meta property="article:section" content="Fitness" />
 
         {/* Twitter */}

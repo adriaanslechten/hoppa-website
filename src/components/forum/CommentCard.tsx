@@ -1,7 +1,7 @@
 import React from "react";
-import { Comment } from "../../../types/forum";
-import { formatDate } from "../../../utils/forum";
-import styles from "../Forum.module.css";
+import { Comment } from "../../types/forum";
+import { formatDate } from "../../utils/forum";
+import styles from "../../pages/forum/Forum.module.css";
 
 interface CommentCardProps {
   comment: Comment;

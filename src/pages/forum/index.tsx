@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useGetTopicsQuery, useCreateTopicMutation } from "../../store/api/forumApi";
-import { TopicCard } from "./components/TopicCard";
+import { TopicCard } from "../../components/forum/TopicCard";
 import styles from "./Forum.module.css";
 
 const ForumListPage: React.FC = () => {

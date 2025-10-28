@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import { Topic } from "../../../types/forum";
-import { formatDate } from "../../../utils/forum";
-import styles from "../Forum.module.css";
+import { Topic } from "../../types/forum";
+import { formatDate } from "../../utils/forum";
+import styles from "../../pages/forum/Forum.module.css";
 
 interface TopicCardProps {
   topic: Topic;
