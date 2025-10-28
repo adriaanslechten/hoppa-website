@@ -9,6 +9,8 @@ import {
   useVoteTopicMutation,
   useCreateCommentMutation,
 } from "../../store/api/forumApi";
+import { getCommentDisplayName, formatDate } from "../../utils/forum";
+import { CommentCard } from "./components/CommentCard";
 import styles from "./Forum.module.css";
 
 const TopicDetailPage: React.FC = () => {
@@ -80,21 +82,6 @@ const TopicDetailPage: React.FC = () => {
     } catch (err: any) {
       console.error("Error posting comment:", err);
     }
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const minutes = Math.floor(diff / (1000 * 60));
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-    if (minutes < 1) return "Just now";
-    if (minutes < 60) return `${minutes}m ago`;
-    if (hours < 24) return `${hours}h ago`;
-    if (days < 7) return `${days}d ago`;
-    return date.toLocaleDateString();
   };
 
   // Show loading during initial load, fetching, or if we just don't have data yet
@@ -193,7 +180,7 @@ const TopicDetailPage: React.FC = () => {
         {error && <div className={styles.Error}>{error}</div>}
 
         <div className={styles.TopicDetail}>
-          <div className={styles.TopicDetailHeader}>
+          <div className={styles.TopicDetailGrid}>
             <div className={styles.VoteSection}>
               <button onClick={() => handleVote(1)} className={styles.VoteButton} disabled={!user}>
                 ↑
@@ -204,16 +191,17 @@ const TopicDetailPage: React.FC = () => {
               </button>
             </div>
             <div className={styles.TopicDetailContent}>
-              <h1 className={styles.TopicDetailTitle}>{topic.title}</h1>
-              <div className={styles.TopicMeta}>
-                <span>Posted {formatDate(topic.createdAt)}</span>
-                {topic.isEdited && <span className={styles.Edited}>• Edited</span>}
+              <div className={styles.TopicHeader}>
+                <h1 className={styles.TopicDetailTitle}>{topic.title}</h1>
+                <div className={styles.TopicMeta}>
+                  <span>Posted {formatDate(topic.createdAt)}</span>
+                  {topic.isEdited && <span className={styles.Edited}>• Edited</span>}
+                </div>
+              </div>
+              <div className={styles.TopicBody}>
+                <p className={styles.TopicText}>{topic.content}</p>
               </div>
             </div>
-          </div>
-
-          <div className={styles.TopicBody}>
-            <p className={styles.TopicText}>{topic.content}</p>
           </div>
         </div>
 
@@ -249,14 +237,11 @@ const TopicDetailPage: React.FC = () => {
               </div>
             ) : (
               comments.map((comment) => (
-                <div key={comment.id} className={styles.CommentCard}>
-                  <div className={styles.CommentHeader}>
-                    <span className={styles.CommentAuthor}>User {comment.userId.substring(0, 8)}</span>
-                    <span className={styles.CommentDate}>{formatDate(comment.createdAt)}</span>
-                    {comment.isEdited && <span className={styles.Edited}>(edited)</span>}
-                  </div>
-                  <p className={styles.CommentContent}>{comment.content}</p>
-                </div>
+                <CommentCard
+                  key={comment.id}
+                  comment={comment}
+                  displayName={getCommentDisplayName(comment.userId, user)}
+                />
               ))
             )}
           </div>

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import Head from "next/head";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useGetTopicsQuery, useCreateTopicMutation } from "../../store/api/forumApi";
+import { TopicCard } from "./components/TopicCard";
 import styles from "./Forum.module.css";
 
 const ForumListPage: React.FC = () => {
@@ -48,18 +48,6 @@ const ForumListPage: React.FC = () => {
     } catch (err: any) {
       console.error("Error creating topic:", err);
     }
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-    if (days === 0) return "Today";
-    if (days === 1) return "Yesterday";
-    if (days < 7) return `${days} days ago`;
-    return date.toLocaleDateString();
   };
 
   if (authLoading) {
@@ -177,23 +165,7 @@ const ForumListPage: React.FC = () => {
         ) : (
           <div className={styles.TopicsList}>
             {topics.map((topic) => (
-              <Link key={topic.id} href={`/forum/${topic.id}`} className={styles.TopicCard}>
-                <div className={styles.TopicVotes}>
-                  <span className={styles.VoteCount}>{topic.votes}</span>
-                  <span className={styles.VoteLabel}>votes</span>
-                </div>
-                <div className={styles.TopicContent}>
-                  <h3 className={styles.TopicTitle}>{topic.title}</h3>
-                  <p className={styles.TopicPreview}>
-                    {topic.content.substring(0, 150)}
-                    {topic.content.length > 150 ? "..." : ""}
-                  </p>
-                  <div className={styles.TopicMeta}>
-                    <span>Posted {formatDate(topic.createdAt)}</span>
-                    {topic.isEdited && <span className={styles.Edited}>• Edited</span>}
-                  </div>
-                </div>
-              </Link>
+              <TopicCard key={topic.id} topic={topic} />
             ))}
           </div>
         )}
