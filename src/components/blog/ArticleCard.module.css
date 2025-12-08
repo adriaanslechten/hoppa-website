@@ -31,6 +31,22 @@
   opacity: 1;
 }
 
+.ImageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.Image {
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.Card:hover .Image {
+  transform: scale(1.05);
+}
+
 .Content {
   padding: 24px;
 }

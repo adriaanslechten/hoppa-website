@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArticleListItem } from "../../types/blog";
 import styles from "./ArticleCard.module.css";
 
@@ -20,6 +21,17 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
 
   return (
     <Link href={`/blog/${article.slug}`} className={styles.Card}>
+      {article.thumbnail?.url && (
+        <div className={styles.ImageWrapper}>
+          <Image
+            src={article.thumbnail.url}
+            alt={article.thumbnail.alt || article.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+            className={styles.Image}
+          />
+        </div>
+      )}
       <div className={styles.Content}>
         <div className={styles.Meta}>
           <span className={styles.Category}>{article.category}</span>

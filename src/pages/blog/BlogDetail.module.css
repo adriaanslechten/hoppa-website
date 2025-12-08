@@ -135,6 +135,20 @@
   color: #888;
 }
 
+/* Featured Image */
+.FeaturedImage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.FeaturedImageInner {
+  object-fit: cover;
+}
+
 /* Table of Contents */
 .TOC {
   background: #fafafa;

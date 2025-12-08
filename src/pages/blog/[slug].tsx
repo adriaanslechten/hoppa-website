@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import {
   useGetArticleBySlugQuery,
   useGetRelatedArticlesQuery,
@@ -181,6 +182,19 @@ const BlogDetailPage: React.FC = () => {
                   </div>
                 </div>
               </header>
+
+              {article.images?.featured?.url && (
+                <div className={styles.FeaturedImage}>
+                  <Image
+                    src={article.images.featured.url}
+                    alt={article.images.featured.alt || article.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+                    priority
+                    className={styles.FeaturedImageInner}
+                  />
+                </div>
+              )}
 
               {article.tableOfContents && article.tableOfContents.length > 0 && (
                 <nav className={styles.TOC}>
