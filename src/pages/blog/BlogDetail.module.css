@@ -1,0 +1,435 @@
+.Container {
+  width: 100vw;
+  margin: 0;
+  margin-left: calc(-50vw + 50%);
+  padding: 120px 20px 60px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fef9e7 0%, #f9f1d0 100%);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.BackLink {
+  display: inline-flex;
+  align-items: center;
+  color: #666;
+  font-weight: 500;
+  margin-bottom: 32px;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-size: 14px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: fit-content;
+}
+
+.BackLink:hover {
+  color: var(--primary-colour, #e83f6f);
+  transform: translateX(-2px);
+}
+
+.BackLink::before {
+  content: "\2190  ";
+}
+
+.Error {
+  background: #fee;
+  border: 1px solid #fcc;
+  color: #c33;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Loading {
+  text-align: center;
+  padding: 48px 20px;
+  color: #666;
+  font-size: 18px;
+}
+
+.Article {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  padding: 48px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.ArticleHeader {
+  margin-bottom: 40px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 32px;
+}
+
+.Meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  flex-wrap: wrap;
+}
+
+.Category {
+  background: #f4d03f;
+  color: #1a1a1a;
+  padding: 6px 14px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.Dot {
+  color: #ccc;
+}
+
+.ReadTime,
+.Date {
+  color: #666;
+}
+
+.Title {
+  font-size: 42px;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.Excerpt {
+  font-size: 20px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.Author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.AuthorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.AuthorName {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.AuthorRole {
+  font-size: 13px;
+  color: #888;
+}
+
+/* Table of Contents */
+.TOC {
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.TOCTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+}
+
+.TOCList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.TOCItem {
+  margin-bottom: 8px;
+}
+
+.TOCLink {
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.TOCLink:hover {
+  color: var(--primary-colour, #e83f6f);
+}
+
+/* Content */
+.Content {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #333;
+}
+
+.Content h1,
+.Content h2,
+.Content h3 {
+  color: #1a1a1a;
+  margin-top: 40px;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.Content h2 {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.Content h3 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.Content p {
+  margin-bottom: 20px;
+}
+
+.Content a {
+  color: var(--primary-colour, #e83f6f);
+  text-decoration: underline;
+}
+
+.Content a:hover {
+  text-decoration: none;
+}
+
+.Content ul,
+.Content ol {
+  margin-bottom: 20px;
+  padding-left: 24px;
+}
+
+.Content li {
+  margin-bottom: 8px;
+}
+
+.Content strong {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.Content blockquote {
+  border-left: 4px solid #f4d03f;
+  padding-left: 20px;
+  margin: 24px 0;
+  font-style: italic;
+  color: #555;
+}
+
+.Content code {
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.Content pre {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 24px 0;
+}
+
+.Content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 24px 0;
+}
+
+/* FAQ Section */
+.FAQSection {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid #eee;
+}
+
+.FAQTitle {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 24px;
+}
+
+.FAQList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.FAQItem {
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.FAQQuestion {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+}
+
+.FAQAnswer {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Sources */
+.Sources {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid #eee;
+}
+
+.SourcesTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+}
+
+.SourcesList {
+  list-style: decimal;
+  padding-left: 20px;
+}
+
+.SourceItem {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.SourceLink {
+  color: var(--primary-colour, #e83f6f);
+  text-decoration: none;
+}
+
+.SourceLink:hover {
+  text-decoration: underline;
+}
+
+.SourceAuthor,
+.SourcePub {
+  color: #888;
+}
+
+/* Footer */
+.ArticleFooter {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.Tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.Tag {
+  background: #f5f5f5;
+  color: #666;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.Stats {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: #888;
+}
+
+/* Related Articles */
+.RelatedSection {
+  max-width: 1200px;
+  margin: 60px auto 0;
+}
+
+.RelatedTitle {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.RelatedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .Container {
+    padding: 100px 16px 40px;
+  }
+
+  .Article {
+    padding: 24px;
+    border-radius: 16px;
+  }
+
+  .Title {
+    font-size: 28px;
+  }
+
+  .Excerpt {
+    font-size: 16px;
+  }
+
+  .Content {
+    font-size: 16px;
+  }
+
+  .Content h2 {
+    font-size: 22px;
+  }
+
+  .Content h3 {
+    font-size: 18px;
+  }
+
+  .FAQTitle {
+    font-size: 22px;
+  }
+
+  .ArticleFooter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .RelatedGrid {
+    grid-template-columns: 1fr;
+  }
+}
