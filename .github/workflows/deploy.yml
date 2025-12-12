@@ -22,10 +22,10 @@ jobs:
         run: corepack enable
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm install --frozen-lockfile
 
       - name: Build Next.js app
-        run: yarn export
+        run: npm export
 
       - name: Verify build output
         run: |
