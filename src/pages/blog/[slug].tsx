@@ -328,7 +328,7 @@ function renderMarkdown(markdown: string): string {
   html = "<p>" + html + "</p>";
 
   // Fix list items by wrapping in ul
-  html = html.replace(/(<li>.*<\/li>)/gis, "<ul>$1</ul>");
+  html = html.replace(/(<li>[\s\S]*?<\/li>)/gi, "<ul>$1</ul>");
 
   // Clean up header IDs
   html = html.replace(/id="([^"]+)"/g, (match, text) => {
