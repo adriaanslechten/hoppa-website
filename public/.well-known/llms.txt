@@ -1,0 +1,44 @@
+# Hoppa - AI-Powered Fitness App
+
+> Hoppa is a mobile fitness application using AI-powered pose detection to provide real-time workout feedback, gamified exercise experiences, and personalized training programs.
+
+## About
+
+Hoppa transforms fitness training through computer vision and machine learning. The app analyzes user movements in real-time, providing instant feedback on exercise form and counting repetitions automatically.
+
+## Key Features
+
+- **AI Pose Detection**: Real-time computer vision analyzes exercise form using on-device machine learning
+- **Automatic Rep Counting**: The AI tracks your movements and counts repetitions accurately
+- **Form Correction**: Instant feedback helps you maintain proper technique and avoid injury
+- **Gamified Workouts**: Progress through campaigns with achievement systems and level progression
+- **Personalized Training**: Adaptive recommendations based on your performance and goals
+- **Recovery Exercises**: Guided mobility and stretching routines for rest days
+
+## Target Audience
+
+- Fitness enthusiasts wanting real-time form feedback
+- Home workout users training without a personal trainer
+- Beginners learning proper exercise technique
+- Athletes tracking workout performance and progression
+
+## Technical Approach
+
+Hoppa uses on-device machine learning for privacy-preserving pose estimation. The AI identifies 17 key body landmarks and compares joint angles against biomechanically optimal positions. No video data ever leaves the user's device.
+
+## Pages
+
+- Homepage: https://hoppa.fit
+- Blog: https://hoppa.fit/blog
+- Community Forum: https://hoppa.fit/forum
+- Privacy Policy: https://hoppa.fit/privacy
+- Terms of Service: https://hoppa.fit/terms
+
+## App Downloads
+
+- iOS App Store: Available for iPhone and iPad (iOS 14+)
+- Google Play Store: Available for Android devices (Android 10+)
+
+## Contact
+
+Website: https://hoppa.fit
