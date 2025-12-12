@@ -16,8 +16,15 @@ import styles from "./Forum.module.css";
 const TopicDetailPage: React.FC = () => {
   const router = useRouter();
   const { topicId } = router.query;
-  const { user } = useAuthContext();
+  const { user, loading: authLoading } = useAuthContext();
   const [newComment, setNewComment] = useState("");
+
+  // Redirect to login if not authenticated
+  React.useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/login");
+    }
+  }, [authLoading, user, router]);
 
   // RTK Query hooks - automatic loading and caching!
   const {
@@ -83,6 +90,11 @@ const TopicDetailPage: React.FC = () => {
       console.error("Error posting comment:", err);
     }
   };
+
+  // Show loading while checking auth or redirecting
+  if (authLoading || !user) {
+    return <div className={styles.Loading}>Loading...</div>;
+  }
 
   // Show loading during initial load, fetching, or if we just don't have data yet
   if (loading || isFetching || !topic) {
@@ -207,27 +219,19 @@ const TopicDetailPage: React.FC = () => {
         <div className={styles.CommentsSection}>
           <h2 className={styles.CommentsTitle}>Comments ({comments.length})</h2>
 
-          {user ? (
-            <form onSubmit={handlePostComment} className={styles.CommentForm}>
-              <textarea
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                className={styles.CommentInput}
-                placeholder="Write a comment..."
-                rows={4}
-                disabled={posting}
-              />
-              <button type="submit" className={styles.SubmitButton} disabled={posting || !newComment.trim()}>
-                {posting ? "Posting..." : "Post Comment"}
-              </button>
-            </form>
-          ) : (
-            <div className={styles.LoginPrompt}>
-              <Link href="/login" className={styles.LoginLink}>
-                Sign in to comment
-              </Link>
-            </div>
-          )}
+          <form onSubmit={handlePostComment} className={styles.CommentForm}>
+            <textarea
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              className={styles.CommentInput}
+              placeholder="Write a comment..."
+              rows={4}
+              disabled={posting}
+            />
+            <button type="submit" className={styles.SubmitButton} disabled={posting || !newComment.trim()}>
+              {posting ? "Posting..." : "Post Comment"}
+            </button>
+          </form>
 
           <div className={styles.CommentsList}>
             {comments.length === 0 ? (

@@ -14,6 +14,13 @@ const ForumListPage: React.FC = () => {
   const [newTopicTitle, setNewTopicTitle] = useState("");
   const [newTopicContent, setNewTopicContent] = useState("");
 
+  // Redirect to login if not authenticated
+  React.useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/login");
+    }
+  }, [authLoading, user, router]);
+
   // RTK Query hooks - automatic loading, error, and data management!
   const { data: topics = [], isLoading: loading, error: queryError } = useGetTopicsQuery({ sort, limit: 50 });
 
@@ -24,12 +31,8 @@ const ForumListPage: React.FC = () => {
 
   const handleCreateTopic = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) {
-      router.push("/login");
-      return;
-    }
 
-    if (!newTopicTitle.trim() || !newTopicContent.trim()) {
+    if (!user || !newTopicTitle.trim() || !newTopicContent.trim()) {
       return;
     }
 
@@ -50,7 +53,8 @@ const ForumListPage: React.FC = () => {
     }
   };
 
-  if (authLoading) {
+  // Show loading while checking auth or redirecting
+  if (authLoading || !user) {
     return <div className={styles.Loading}>Loading...</div>;
   }
 
