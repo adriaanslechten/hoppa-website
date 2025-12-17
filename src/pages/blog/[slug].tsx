@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, ReactNode } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import ReactMarkdown from "react-markdown";
 import {
   useGetArticleBySlugQuery,
   useGetRelatedArticlesQuery,
@@ -10,6 +11,31 @@ import {
 } from "../../store/api/blogApi";
 import { ArticleCard } from "../../components/blog/ArticleCard";
 import styles from "./BlogDetail.module.css";
+
+// Helper to check for specific content in ReactNode
+const isAtAGlance = (children: ReactNode): boolean => {
+  if (!children) return false;
+
+  // Recursively check children
+  const checkNode = (node: any): boolean => {
+    if (typeof node === 'string') {
+      return node.toLowerCase().includes('at a glance');
+    }
+
+    if (Array.isArray(node)) {
+      return node.some(checkNode);
+    }
+
+    if (React.isValidElement(node)) {
+      // Check children of the element
+      return checkNode(node.props.children);
+    }
+
+    return false;
+  };
+
+  return checkNode(children);
+};
 
 const BlogDetailPage: React.FC = () => {
   const router = useRouter();
@@ -29,6 +55,70 @@ const BlogDetailPage: React.FC = () => {
   );
 
   const [incrementViews] = useIncrementViewsMutation();
+
+  // Local state for parsed content and sources
+  const [displayContent, setDisplayContent] = React.useState("");
+  const [displaySources, setDisplaySources] = React.useState<any[]>([]);
+  const [displayTakeaways, setDisplayTakeaways] = React.useState<string[]>([]);
+
+  // Parse content and sources
+  useEffect(() => {
+    if (!article) return;
+
+    let content = article.content;
+    let sources = article.sources || [];
+
+    // If no structured sources, try to extract from markdown
+    if (sources.length === 0 && content.match(/##\s*References/i)) {
+      const parts = content.split(/##\s*References/i);
+      if (parts.length > 1) {
+        content = parts[0];
+        const refsRaw = parts[1].trim();
+        const extractedSources = refsRaw
+          .split('\n')
+          .filter(line => line.trim().length > 0)
+          .map(line => {
+            // Keep the original text including [1], [2] etc
+            return { title: line.trim() };
+          });
+
+        if (extractedSources.length > 0) {
+          sources = extractedSources;
+        }
+      }
+    }
+
+    // Extract Key Takeaways
+    // Matches "## Key Takeaways" (case insensitive) and everything until the next "##" or end of string
+    const takeawaysMatch = content.match(/#{1,3}\s*Key Takeaways([\s\S]*?)(?=(?:#{1,3}\s|$))/i);
+    let takeaways: string[] = [];
+
+    if (takeawaysMatch && takeawaysMatch[1]) {
+      const takeawaysRaw = takeawaysMatch[1].trim();
+      takeaways = takeawaysRaw
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line.startsWith('-') || line.startsWith('*'))
+        .map(line => line.replace(/^[-*]\s*/, '').trim());
+
+      // Remove from content
+      content = content.replace(/#{1,3}\s*Key Takeaways[\s\S]*?(?=(?:#{1,3}\s|$))/i, '');
+    }
+
+    // Remove FAQ section from markdown if it exists (to avoid duplication with structured FAQ)
+    // Use string splitting instead of replace for better reliability
+    const faqRegex = /#{1,3}\s*Frequently Asked Questions/i;
+    if (content.match(faqRegex)) {
+      const parts = content.split(faqRegex);
+      if (parts.length > 0) {
+        content = parts[0];
+      }
+    }
+
+    setDisplayContent(content);
+    setDisplaySources(sources);
+    setDisplayTakeaways(takeaways);
+  }, [article]);
 
   // Increment view count on page load
   useEffect(() => {
@@ -176,6 +266,9 @@ const BlogDetailPage: React.FC = () => {
                 <h1 className={styles.Title}>{article.title}</h1>
                 <p className={styles.Excerpt}>{article.excerpt}</p>
                 <div className={styles.Author}>
+                  <div className={styles.AuthorAvatar}>
+                    {article.author.name.charAt(0)}
+                  </div>
                   <div className={styles.AuthorInfo}>
                     <span className={styles.AuthorName}>{article.author.name}</span>
                     {article.author.role && <span className={styles.AuthorRole}>{article.author.role}</span>}
@@ -215,42 +308,79 @@ const BlogDetailPage: React.FC = () => {
                 </nav>
               )}
 
-              <div className={styles.Content} dangerouslySetInnerHTML={{ __html: renderMarkdown(article.content) }} />
-
-              {article.faqs && article.faqs.length > 0 && (
-                <section className={styles.FAQSection}>
-                  <h2 className={styles.FAQTitle}>Frequently Asked Questions</h2>
-                  <div className={styles.FAQList}>
-                    {article.faqs.map((faq: { question: string; answer: string }, index: number) => (
-                      <div key={index} className={styles.FAQItem}>
-                        <h3 className={styles.FAQQuestion}>{faq.question}</h3>
-                        <p className={styles.FAQAnswer}>{faq.answer}</p>
+                      <div className={styles.Content}>
+                        <ReactMarkdown
+                          components={{
+                            h1: ({ node, ...props }) => <h1 id={props.children?.toString().toLowerCase().replace(/\s+/g, '-')} {...props} />,
+                            h2: ({ node, ...props }) => <h2 id={props.children?.toString().toLowerCase().replace(/\s+/g, '-')} {...props} />,
+                            h3: ({ node, ...props }) => <h3 id={props.children?.toString().toLowerCase().replace(/\s+/g, '-')} {...props} />,
+                            img: ({ node, ...props }) => (
+                              <div className={styles.ImageContainer}>
+                                <img {...props} className={styles.MarkdownImage} alt={props.alt || ''} />
+                                {props.title && <span className={styles.ImageCaption}>{props.title}</span>}
+                              </div>
+                            ),
+                            blockquote: ({ node, children, ...props }) => {
+                              const isBox = isAtAGlance(children);
+                              return (
+                                <blockquote className={isBox ? styles.SummaryBox : styles.PullQuote} {...props}>
+                                  {children}
+                                </blockquote>
+                              );
+                            },
+                          }}
+                        >
+                          {displayContent}
+                        </ReactMarkdown>
                       </div>
-                    ))}
-                  </div>
-                </section>
-              )}
 
-              {article.sources && article.sources.length > 0 && (
-                <section className={styles.Sources}>
-                  <h3 className={styles.SourcesTitle}>Sources</h3>
-                  <ul className={styles.SourcesList}>
-                    {article.sources.map((source, index) => (
-                      <li key={index} className={styles.SourceItem}>
-                        {source.url ? (
-                          <a href={source.url} target="_blank" rel="noopener noreferrer" className={styles.SourceLink}>
-                            {source.title}
-                          </a>
-                        ) : (
-                          <span>{source.title}</span>
-                        )}
-                        {source.author && <span className={styles.SourceAuthor}> - {source.author}</span>}
-                        {source.publication && <span className={styles.SourcePub}>, {source.publication}</span>}
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              )}
+                      {displayTakeaways.length > 0 && (
+                        <section className={styles.KeyTakeaways}>
+                          <h2 className={styles.KeyTakeawaysTitle}>Key Takeaways</h2>
+                          <ul className={styles.KeyTakeawaysList}>
+                            {displayTakeaways.map((takeaway, index) => (
+                              <li key={index} className={styles.KeyTakeawaysItem}>
+                                {takeaway}
+                              </li>
+                            ))}
+                          </ul>
+                        </section>
+                      )}
+
+                      {article.faqs && article.faqs.length > 0 && (
+                        <section className={styles.FAQSection}>
+                          <h2 className={styles.FAQTitle}>Frequently Asked Questions</h2>
+                          <div className={styles.FAQList}>
+                            {article.faqs.map((faq: { question: string; answer: string }, index: number) => (
+                              <div key={index} className={styles.FAQItem}>
+                                <h3 className={styles.FAQQuestion}>{faq.question}</h3>
+                                <p className={styles.FAQAnswer}>{faq.answer}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </section>
+                      )}
+
+                      {displaySources.length > 0 && (
+                        <section className={styles.Sources}>
+                          <h3 className={styles.SourcesTitle}>Sources</h3>
+                          <ul className={styles.SourcesList}>
+                            {displaySources.map((source, index) => (
+                              <li key={index} className={styles.SourceItem}>
+                                {source.url ? (
+                                  <a href={source.url} target="_blank" rel="noopener noreferrer" className={styles.SourceLink}>
+                                    {source.title}
+                                  </a>
+                                ) : (
+                                  <span>{source.title}</span>
+                                )}
+                                {source.author && <span className={styles.SourceAuthor}> - {source.author}</span>}
+                                {source.publication && <span className={styles.SourcePub}>, {source.publication}</span>}
+                              </li>
+                            ))}
+                          </ul>
+                        </section>
+                      )}
 
               <footer className={styles.ArticleFooter}>
                 {article.tags && article.tags.length > 0 && (
@@ -302,44 +432,5 @@ const BlogDetailPage: React.FC = () => {
     </>
   );
 };
-
-// Simple markdown to HTML converter
-function renderMarkdown(markdown: string): string {
-  let html = markdown
-    // Headers
-    .replace(/^### (.*$)/gim, '<h3 id="$1">$1</h3>')
-    .replace(/^## (.*$)/gim, '<h2 id="$1">$1</h2>')
-    .replace(/^# (.*$)/gim, '<h1 id="$1">$1</h1>')
-    // Bold
-    .replace(/\*\*(.*?)\*\*/gim, "<strong>$1</strong>")
-    // Italic
-    .replace(/\*(.*?)\*/gim, "<em>$1</em>")
-    // Links
-    .replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-    // Lists
-    .replace(/^\- (.*$)/gim, "<li>$1</li>")
-    .replace(/^\d+\. (.*$)/gim, "<li>$1</li>")
-    // Paragraphs
-    .replace(/\n\n/gim, "</p><p>")
-    // Line breaks
-    .replace(/\n/gim, "<br />");
-
-  // Wrap in paragraphs
-  html = "<p>" + html + "</p>";
-
-  // Fix list items by wrapping in ul
-  html = html.replace(/(<li>[\s\S]*?<\/li>)/gi, "<ul>$1</ul>");
-
-  // Clean up header IDs
-  html = html.replace(/id="([^"]+)"/g, (match, text) => {
-    const id = text
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, "")
-      .replace(/\s+/g, "-");
-    return `id="${id}"`;
-  });
-
-  return html;
-}
 
 export default BlogDetailPage;

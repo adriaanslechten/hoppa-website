@@ -21,7 +21,7 @@ const BlogSection: React.FC = () => {
     readingTime: article.readingTime,
     views: article.views,
     likes: article.likes,
-    thumbnail: article.images?.thumbnail,
+    image: article.images?.thumbnail?.url || article.images?.featured?.url,
   }));
 
   return (

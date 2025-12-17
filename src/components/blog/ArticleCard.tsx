@@ -46,10 +46,10 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   return (
     <Link href={`/blog/${article.slug}`} className={styles.Card}>
       <div className={styles.ImageWrapper}>
-        {article.thumbnail?.url ? (
+        {article.image ? (
           <Image
-            src={article.thumbnail.url}
-            alt={article.thumbnail.alt || article.title}
+            src={article.image}
+            alt={article.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
             className={styles.Image}

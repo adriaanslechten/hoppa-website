@@ -151,8 +151,8 @@ export interface ArticleListItem {
   readingTime: number;
   views: number;
   likes: number;
-  // Optional thumbnail for card display
-  thumbnail?: ArticleImage;
+  // Optional image URL for card display
+  image?: string;
 }
 
 // Pagination types
