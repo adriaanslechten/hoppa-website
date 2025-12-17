@@ -4,6 +4,11 @@ module.exports = {
   generateRobotsTxt: false, // We manage robots.txt manually for AI crawlers
   generateIndexSitemap: false,
   exclude: ["/api/*", "/server-sitemap.xml", "/admin/*", "/login"],
+  robotsTxtOptions: {
+    additionalSitemaps: [
+      `${process.env.SITE_URL || "https://hoppa.fit"}/server-sitemap.xml`,
+    ],
+  },
   autoLastmod: true,
   transform: async (config, path) => {
     // Custom priority and changefreq for different pages

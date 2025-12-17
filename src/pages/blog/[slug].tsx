@@ -17,7 +17,7 @@ const isAtAGlance = (children: ReactNode): boolean => {
   if (!children) return false;
 
   // Recursively check children
-  const checkNode = (node: any): boolean => {
+  const checkNode = (node: ReactNode): boolean => {
     if (typeof node === 'string') {
       return node.toLowerCase().includes('at a glance');
     }
@@ -28,7 +28,8 @@ const isAtAGlance = (children: ReactNode): boolean => {
 
     if (React.isValidElement(node)) {
       // Check children of the element
-      return checkNode(node.props.children);
+      const props = node.props as { children?: ReactNode };
+      return checkNode(props.children);
     }
 
     return false;
@@ -420,6 +421,7 @@ const BlogDetailPage: React.FC = () => {
                         readingTime: relatedArticle.readingTime,
                         views: relatedArticle.views,
                         likes: relatedArticle.likes,
+                        image: relatedArticle.images?.thumbnail?.url || relatedArticle.images?.featured?.url,
                       }}
                     />
                   ))}
