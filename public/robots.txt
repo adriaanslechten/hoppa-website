@@ -58,8 +58,9 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-# Sitemap
+# Sitemaps
 Sitemap: https://hoppa.fit/sitemap.xml
+Sitemap: https://hoppa.fit/server-sitemap.xml
 
 # LLMs.txt - AI-readable site summary
 # https://hoppa.fit/.well-known/llms.txt
