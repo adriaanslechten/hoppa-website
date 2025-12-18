@@ -376,47 +376,62 @@
 
 /* Key Takeaways */
 .KeyTakeaways {
-  margin-top: 64px;
-  background: #fff;
+  background: linear-gradient(135deg, #f8f5f2 0%, #faf8f5 100%);
+  border: 1px solid #e8e6e3;
+  border-radius: 16px;
   padding: 40px;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  margin: 64px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.KeyTakeaways::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #c084fc 0%, #a855f7 100%);
+  border-radius: 16px 16px 0 0;
 }
 
 .KeyTakeawaysTitle {
   font-family: "Georgia", "Times New Roman", serif;
   font-size: 24px;
-  margin-bottom: 24px;
+  font-weight: 400;
   color: #1a1a1a;
-  border-bottom: 2px solid #e2e8f0;
+  margin-bottom: 24px;
   padding-bottom: 16px;
-  display: inline-block;
-  padding-right: 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .KeyTakeawaysList {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .KeyTakeawaysItem {
   position: relative;
   padding-left: 28px;
-  margin-bottom: 16px;
-  font-size: 18px;
+  font-size: 17px;
   line-height: 1.6;
   color: #333;
 }
 
 .KeyTakeawaysItem::before {
-  content: "✓";
+  content: "";
   position: absolute;
   left: 0;
-  top: 0;
-  color: #10b981; /* Emerald green */
-  font-weight: bold;
+  top: 10px;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #c084fc 0%, #a855f7 100%);
+  border-radius: 50%;
 }
 
 /* FAQ */
@@ -555,42 +570,518 @@
   margin: 0 auto;
 }
 
-/* Responsive */
-@media (max-width: 800px) {
+/* Responsive - Tablet Landscape */
+@media (max-width: 1024px) {
   .Article {
-    padding-top: 80px;
+    padding: 100px 24px 60px;
+  }
+
+  .BackLink {
+    top: 24px;
+    left: 24px;
+  }
+
+  .ArticleHeader {
+    margin-bottom: 56px;
+  }
+
+  .Title {
+    font-size: clamp(28px, 4.5vw, 42px);
+  }
+
+  .Excerpt {
+    font-size: 18px;
+    margin-bottom: 32px;
+  }
+
+  .FeaturedImage {
+    height: 55vh;
+    margin-bottom: 60px;
+  }
+
+  .TOC {
+    padding: 24px;
+    margin-bottom: 60px;
+  }
+
+  .Content {
+    font-size: 18px;
+  }
+
+  .Content h2 {
+    font-size: 28px;
+    margin-top: 48px;
+  }
+
+  .Content h3 {
+    font-size: 22px;
+    margin-top: 40px;
+  }
+
+  .PullQuote {
+    font-size: 24px;
+    padding: 0 32px;
+    margin: 48px 0;
+  }
+
+  .SummaryBox {
+    margin: 48px -24px;
+    padding: 32px;
+  }
+
+  .ImageContainer {
+    margin: 48px -40px;
+  }
+
+  .FAQSection {
+    margin-top: 72px;
+    padding-top: 48px;
+  }
+
+  .FAQTitle {
+    font-size: 26px;
+    margin-bottom: 32px;
+  }
+
+  .Sources {
+    padding: 24px;
+    margin-top: 48px;
+  }
+
+  .ArticleFooter {
+    margin-top: 60px;
+  }
+}
+
+/* Responsive - Tablet */
+@media (max-width: 800px) {
+  .Container {
+    padding: 0 24px;
+  }
+
+  .Article {
+    padding: 80px 0 48px;
   }
 
   .BackLink {
     position: relative;
     top: 0;
     left: 0;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
+  }
+
+  .ArticleHeader {
+    margin-bottom: 48px;
+  }
+
+  .Meta {
+    gap: 12px;
+    margin-bottom: 24px;
+    font-size: 11px;
   }
 
   .Title {
-    font-size: 32px;
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+
+  .Excerpt {
+    font-size: 17px;
+    margin-bottom: 28px;
+  }
+
+  .Author {
+    gap: 10px;
+  }
+
+  .AuthorAvatar {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .AuthorName {
+    font-size: 13px;
+  }
+
+  .AuthorRole {
+    font-size: 11px;
+  }
+
+  .FeaturedImage {
+    height: 45vh;
+    min-height: 280px;
+    margin-bottom: 48px;
+  }
+
+  .TOC {
+    padding: 20px;
+    margin-bottom: 48px;
+  }
+
+  .TOCTitle {
+    font-size: 10px;
+    margin-bottom: 16px;
+  }
+
+  .TOCLink {
+    font-size: 14px;
+  }
+
+  .Content {
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  .Content h2 {
+    font-size: 24px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  .Content h3 {
+    font-size: 20px;
+    margin-top: 32px;
+  }
+
+  .Content p {
+    margin-bottom: 24px;
+  }
+
+  .PullQuote {
+    font-size: 22px;
+    padding: 0 20px;
+    margin: 40px 0;
+  }
+
+  .PullQuote::before {
+    font-size: 60px;
+    top: -30px;
   }
 
   .SummaryBox {
-    margin: 48px -20px;
-    padding: 32px 24px;
+    margin: 40px -24px;
+    padding: 24px;
     border-radius: 0;
     border-left: none;
     border-right: none;
   }
 
-  .ImageContainer {
-    margin: 40px -20px;
+  .SummaryBox p {
+    font-size: 16px;
   }
 
-  .FeaturedImage {
-    height: 50vh;
+  .SummaryBox p:first-child strong {
+    font-size: 20px;
+    padding-bottom: 12px;
+  }
+
+  .Content .SummaryBox li {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  .ImageContainer {
+    margin: 40px -24px;
+  }
+
+  .ImageCaption {
+    font-size: 12px;
+    padding: 0 24px;
+  }
+
+  .FAQSection {
+    margin-top: 56px;
+    padding-top: 40px;
+  }
+
+  .FAQTitle {
+    font-size: 24px;
+    margin-bottom: 28px;
+  }
+
+  .FAQItem {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+  }
+
+  .FAQQuestion {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .FAQAnswer {
+    font-size: 15px;
+  }
+
+  .Sources {
+    padding: 20px;
+    margin-top: 40px;
+  }
+
+  .SourcesTitle {
+    font-size: 10px;
   }
 
   .ArticleFooter {
+    margin-top: 48px;
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
     align-items: flex-start;
+  }
+
+  .Tag {
+    font-size: 11px;
+    padding: 5px 12px;
+  }
+
+  .Stats {
+    font-size: 12px;
+  }
+
+  .RelatedSection {
+    margin-top: 80px;
+    padding: 60px 24px;
+  }
+
+  .RelatedTitle {
+    font-size: 26px;
+    margin-bottom: 48px;
+  }
+
+  .RelatedGrid {
+    gap: 32px;
+  }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 480px) {
+  .Container {
+    padding: 0 16px;
+  }
+
+  .Article {
+    padding: 60px 0 40px;
+  }
+
+  .BackLink {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .ArticleHeader {
+    margin-bottom: 40px;
+  }
+
+  .Meta {
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 10px;
+  }
+
+  .Title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .Excerpt {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  .Author {
+    gap: 8px;
+  }
+
+  .AuthorAvatar {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .AuthorName {
+    font-size: 12px;
+  }
+
+  .AuthorRole {
+    font-size: 10px;
+  }
+
+  .FeaturedImage {
+    height: 35vh;
+    min-height: 220px;
+    margin-bottom: 40px;
+  }
+
+  .TOC {
+    padding: 16px;
+    margin-bottom: 40px;
+  }
+
+  .TOCTitle {
+    font-size: 9px;
+    margin-bottom: 12px;
+  }
+
+  .TOCItem {
+    margin-bottom: 8px;
+  }
+
+  .TOCLink {
+    font-size: 13px;
+  }
+
+  .Content {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .Content h2 {
+    font-size: 20px;
+    margin-top: 36px;
+    margin-bottom: 16px;
+  }
+
+  .Content h3 {
+    font-size: 18px;
+    margin-top: 28px;
+  }
+
+  .Content p {
+    margin-bottom: 20px;
+  }
+
+  .Content ul,
+  .Content ol {
+    margin-bottom: 20px;
+    padding-left: 16px;
+  }
+
+  .Content li {
+    margin-bottom: 10px;
+    padding-left: 4px;
+  }
+
+  .PullQuote {
+    font-size: 18px;
+    padding: 0 12px;
+    margin: 32px 0;
+  }
+
+  .PullQuote::before {
+    font-size: 48px;
+    top: -24px;
+  }
+
+  .SummaryBox {
+    margin: 32px -16px;
+    padding: 20px;
+  }
+
+  .SummaryBox p {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  .SummaryBox p:first-child strong {
+    font-size: 18px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+
+  .Content .SummaryBox li {
+    font-size: 14px;
+    margin-bottom: 10px;
+    padding-left: 16px;
+  }
+
+  .Content .SummaryBox li::before {
+    width: 5px;
+    height: 5px;
+    top: 9px;
+  }
+
+  .ImageContainer {
+    margin: 32px -16px;
+  }
+
+  .ImageCaption {
+    font-size: 11px;
+    padding: 0 16px;
+    margin-top: 12px;
+  }
+
+  .FAQSection {
+    margin-top: 48px;
+    padding-top: 32px;
+  }
+
+  .FAQTitle {
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+
+  .FAQItem {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+
+  .FAQQuestion {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .FAQAnswer {
+    font-size: 14px;
+  }
+
+  .Sources {
+    padding: 16px;
+    margin-top: 32px;
+    font-size: 11px;
+  }
+
+  .SourcesTitle {
+    font-size: 9px;
+    margin-bottom: 10px;
+  }
+
+  .SourceItem {
+    margin-bottom: 6px;
+  }
+
+  .ArticleFooter {
+    margin-top: 40px;
+    padding-top: 24px;
+  }
+
+  .Tags {
+    gap: 6px;
+  }
+
+  .Tag {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+
+  .Stats {
+    font-size: 11px;
+  }
+
+  .RelatedSection {
+    margin-top: 60px;
+    padding: 48px 16px;
+  }
+
+  .RelatedTitle {
+    font-size: 22px;
+    margin-bottom: 36px;
+  }
+
+  .RelatedGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 }

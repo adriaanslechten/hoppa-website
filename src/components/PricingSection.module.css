@@ -181,6 +181,15 @@
 
 /* Responsive adjustments */
 @media (max-width: 967px) {
+  .pricing {
+    padding: 80px 20px;
+    min-height: auto;
+  }
+
+  .container {
+    gap: 48px;
+  }
+
   .cardTitle {
     font-size: 32px;
   }
@@ -193,8 +202,13 @@
     font-size: 20px;
   }
 
+  .featuresList {
+    gap: 32px;
+  }
+
   .featureTitle {
     font-size: 18px;
+    margin-bottom: 8px;
   }
 
   .featureDescription {
@@ -203,25 +217,146 @@
 }
 
 @media (max-width: 480px) {
+  .pricing {
+    padding: 60px 16px;
+  }
+
+  .container {
+    gap: 40px;
+  }
+
   .pricingCard {
-    padding: 36px 28px;
+    padding: 32px 24px;
+    border-radius: 20px;
+  }
+
+  .cardHeader {
+    margin-bottom: 24px;
   }
 
   .cardTitle {
-    font-size: 28px;
+    font-size: 26px;
+    margin-bottom: 6px;
+  }
+
+  .cardSubtitle {
+    font-size: 14px;
+  }
+
+  .priceContainer {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
   }
 
   .price {
-    font-size: 56px;
+    font-size: 48px;
+  }
+
+  .period {
+    font-size: 16px;
+  }
+
+  .annualPrice {
+    font-size: 13px;
+  }
+
+  .upgradeButton {
+    padding: 14px 24px;
+    font-size: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .upgradeButton:hover {
+    transform: none;
+  }
+
+  .freeOption {
+    padding-top: 14px;
+  }
+
+  .freeText {
+    font-size: 13px;
+  }
+
+  .featuresList {
+    gap: 24px;
   }
 
   .checkmark {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
   }
 
   .featureItem {
-    grid-template-columns: 24px 1fr;
+    grid-template-columns: 22px 1fr;
     gap: 12px;
+  }
+
+  .featureTitle {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .featureDescription {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 380px) {
+  .pricing {
+    padding: 48px 12px;
+  }
+
+  .pricingCard {
+    padding: 28px 20px;
+  }
+
+  .cardTitle {
+    font-size: 22px;
+  }
+
+  .price {
+    font-size: 40px;
+  }
+
+  .period {
+    font-size: 14px;
+  }
+
+  .annualPrice {
+    font-size: 12px;
+  }
+
+  .upgradeButton {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .freeText {
+    font-size: 12px;
+  }
+
+  .featuresList {
+    gap: 20px;
+  }
+
+  .checkmark {
+    width: 20px;
+    height: 20px;
+  }
+
+  .featureItem {
+    grid-template-columns: 20px 1fr;
+    gap: 10px;
+  }
+
+  .featureTitle {
+    font-size: 15px;
+  }
+
+  .featureDescription {
+    font-size: 13px;
   }
 }

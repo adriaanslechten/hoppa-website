@@ -44,6 +44,13 @@ const TopNavBar: React.FC = () => {
             </Link>
           </li>
           <li className={styles.NavItem}>
+            <Link href="/blog" passHref>
+              <div className={`${styles.NavLink} ${router.pathname.startsWith("/blog") ? styles.active : ""}`}>
+                Blog
+              </div>
+            </Link>
+          </li>
+          <li className={styles.NavItem}>
             <Link href="/terms" passHref>
               <div className={`${styles.NavLink} ${router.pathname === "/terms" ? styles.active : ""}`}>
                 <span className={styles.NavLabelDesktop}>Terms and Privacy</span>

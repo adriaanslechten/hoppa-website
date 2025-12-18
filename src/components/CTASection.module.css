@@ -50,3 +50,66 @@
   outline: 2px solid #fff; /* White outline for focus */
   outline-offset: 2px;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cta {
+    padding: 48px 20px;
+  }
+
+  .heading {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+
+  .ctaButton {
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta {
+    padding: 40px 16px;
+  }
+
+  .heading {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .ctaButton {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 380px) {
+  .cta {
+    padding: 32px 12px;
+  }
+
+  .heading {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .ctaButton {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+}

@@ -227,17 +227,27 @@
   font-weight: 500;
 }
 
+/* Tablet */
 @media (max-width: 768px) {
   .Container {
-    padding: 100px 16px 40px;
+    padding: 100px 24px 40px;
+  }
+
+  .Container::before,
+  .Container::after {
+    opacity: 0.5;
+  }
+
+  .Header {
+    margin-bottom: 40px;
   }
 
   .Title {
-    font-size: 38px;
+    font-size: 42px;
   }
 
   .Subtitle {
-    font-size: 16px;
+    font-size: 17px;
   }
 
   .Badge {
@@ -248,21 +258,184 @@
   .Filters {
     flex-direction: column;
     align-items: stretch;
+    gap: 16px;
+    margin-bottom: 32px;
   }
 
   .Categories {
     justify-content: center;
   }
 
+  .CategoryButton {
+    font-size: 12px;
+    padding: 7px 14px;
+  }
+
   .SortButtons {
     justify-content: center;
   }
 
+  .SortButton {
+    font-size: 12px;
+    padding: 7px 16px;
+  }
+
   .ArticlesGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
   }
 
   .Pagination {
     flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .PageButton {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .PageInfo {
+    font-size: 13px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .Container {
+    padding: 80px 16px 32px;
+  }
+
+  .Container::before,
+  .Container::after {
+    opacity: 0.3;
+    width: 60%;
+    height: 50%;
+  }
+
+  .Header {
+    margin-bottom: 32px;
+  }
+
+  .Badge {
+    font-size: 10px;
+    padding: 5px 14px;
+    margin-bottom: 16px;
+  }
+
+  .Title {
+    font-size: 32px;
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+
+  .Subtitle {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .Filters {
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .Categories {
+    gap: 8px;
+  }
+
+  .CategoryButton {
+    font-size: 11px;
+    padding: 6px 12px;
+    border-width: 1.5px;
+  }
+
+  .CategoryButton:hover {
+    transform: none;
+  }
+
+  .SortButtons {
+    gap: 8px;
+  }
+
+  .SortButton {
+    font-size: 11px;
+    padding: 6px 14px;
+    flex: 1;
+    text-align: center;
+  }
+
+  .SortButton:hover {
+    transform: none;
+  }
+
+  .ArticlesGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .Loading {
+    padding: 40px 16px;
+    font-size: 16px;
+  }
+
+  .Empty {
+    padding: 48px 20px;
+    font-size: 15px;
+  }
+
+  .Pagination {
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .PageButton {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+
+  .PageButton:hover:not(:disabled) {
+    transform: none;
+  }
+
+  .PageInfo {
+    font-size: 12px;
+    width: 100%;
+    text-align: center;
+    order: -1;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 360px) {
+  .Container {
+    padding: 70px 12px 24px;
+  }
+
+  .Title {
+    font-size: 28px;
+  }
+
+  .Subtitle {
+    font-size: 14px;
+  }
+
+  .CategoryButton {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+
+  .SortButton {
+    font-size: 10px;
+    padding: 5px 12px;
+  }
+
+  .ArticlesGrid {
+    gap: 14px;
+  }
+
+  .PageButton {
+    padding: 8px 14px;
+    font-size: 12px;
   }
 }

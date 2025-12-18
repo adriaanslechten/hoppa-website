@@ -19,6 +19,7 @@ export interface Topic {
   createdAt: string;
   isDeleted: boolean;
   isEdited: boolean;
+  commentCount?: number;
 }
 
 // API Request/Response types

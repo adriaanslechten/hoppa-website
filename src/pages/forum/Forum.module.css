@@ -159,9 +159,13 @@
 
 .Empty {
   text-align: center;
-  padding: 20px 40px;
-  color: #666;
-  font-size: 15px;
+  padding: 12px 20px;
+  color: #888;
+  font-size: 13px;
+}
+
+.Empty p {
+  margin: 0;
 }
 
 .TopicsList {
@@ -214,31 +218,50 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  min-width: 64px;
-  padding: 14px 12px;
-  background: white;
-  border: 2px solid #e0e0e0;
-  border-radius: 14px;
+  gap: 8px;
+  min-width: 52px;
+  padding: 12px 10px;
+  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  border: 1px solid rgba(244, 208, 63, 0.2);
+  border-radius: 10px;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+.TopicVotes::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #f4d03f 0%, #e8c547 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .TopicCard:hover .TopicVotes {
-  border-color: #d4c5a9;
-  box-shadow: 0 4px 12px rgba(244, 208, 63, 0.15);
+  border-color: rgba(244, 208, 63, 0.4);
+  box-shadow: 0 4px 16px rgba(244, 208, 63, 0.12);
   transform: translateY(-2px);
 }
 
+.TopicCard:hover .TopicVotes::before {
+  opacity: 1;
+}
+
 .VoteCount {
-  font-size: 24px;
-  font-weight: 900;
+  font-size: 12px;
+  font-weight: 600;
   color: #1a1a1a;
   line-height: 1;
 }
 
 .VoteLabel {
-  font-size: 9px;
-  color: #888;
+  font-size: 8px;
+  color: #999;
   text-transform: uppercase;
   letter-spacing: 0.8px;
   font-weight: 600;
@@ -444,59 +467,50 @@
 }
 
 .TopicDetailGrid {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 24px;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 16px;
   align-items: start;
 }
 
 .VoteSection {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 6px;
-  padding: 0 20px 0 0;
-  min-width: 48px;
+  gap: 2px;
+  padding: 2px 6px;
+  min-width: auto;
   flex-shrink: 0;
-  border-right: 2px solid #f0f0f0;
+  background: rgba(240, 240, 240, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  width: fit-content;
 }
 
 .VoteButton {
-  background: white;
+  background: transparent;
   border: none;
-  border-radius: 10px;
-  width: 36px;
-  height: 36px;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 14px;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
   position: relative;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-}
-
-.VoteButton:first-child {
-  background: linear-gradient(135deg, #ffd6a5 0%, #ffcc99 100%);
-  color: #8b6914;
+  color: #888;
 }
 
 .VoteButton:first-child:hover:not(:disabled) {
-  background: linear-gradient(135deg, #ffcc99 0%, #ffb380 100%);
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 16px rgba(255, 204, 153, 0.35);
-}
-
-.VoteButton:last-child {
-  background: linear-gradient(135deg, #f5c6d6 0%, #edb5c9 100%);
-  color: #8b2f52;
+  background: rgba(255, 140, 0, 0.1);
+  color: #ff8c00;
 }
 
 .VoteButton:last-child:hover:not(:disabled) {
-  background: linear-gradient(135deg, #edb5c9 0%, #e5a4bc 100%);
-  transform: translateY(2px) scale(1.05);
-  box-shadow: 0 6px 16px rgba(237, 181, 201, 0.35);
+  background: rgba(138, 43, 226, 0.1);
+  color: #8a2be2;
 }
 
 .VoteButton:disabled {
@@ -506,17 +520,55 @@
 }
 
 .VoteSection .VoteCount {
-  font-size: 16px;
-  font-weight: 800;
+  font-size: 12px;
+  font-weight: 600;
   color: #1a1a1a;
   line-height: 1;
-  margin: 2px 0;
-  padding: 6px 10px;
-  background: white;
-  border-radius: 10px;
-  min-width: 36px;
+  margin: 0;
+  padding: 0 2px;
+  min-width: 16px;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.ActionRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.CommentCount {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 10px;
+  background: rgba(240, 240, 240, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  color: #888;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.CommentCount:hover {
+  color: #1a1a1a;
+  background: rgba(240, 240, 240, 0.8);
+}
+
+.CommentCount svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.CommentCount span {
+  color: #1a1a1a;
+  min-width: 16px;
+  text-align: center;
 }
 
 .TopicDetailContent {
@@ -669,17 +721,27 @@
   white-space: pre-wrap;
 }
 
+/* Tablets */
 @media (max-width: 768px) {
   .Container {
-    padding: 100px 16px 40px;
+    padding: 100px 24px 40px;
+  }
+
+  .Container::before,
+  .Container::after {
+    opacity: 0.5;
+  }
+
+  .Header {
+    margin-bottom: 40px;
   }
 
   .Title {
-    font-size: 38px;
+    font-size: 42px;
   }
 
   .Subtitle {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .Badge {
@@ -689,22 +751,30 @@
 
   .Actions {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
+    margin-bottom: 32px;
+    gap: 12px;
   }
 
   .SortButtons {
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
   }
 
   .SortButton {
     font-size: 14px;
-    padding: 8px 18px;
+    padding: 9px 20px;
   }
 
   .CreateButton {
-    width: 100%;
+    width: auto;
+    min-width: 200px;
     text-align: center;
+    padding: 12px 24px;
+  }
+
+  .TopicsList {
+    gap: 16px;
   }
 
   .TopicCard {
@@ -717,23 +787,36 @@
     flex-direction: row;
     min-width: auto;
     justify-content: flex-start;
-    padding: 8px 12px;
+    padding: 10px 16px;
   }
 
   .VoteCount {
-    font-size: 24px;
+    font-size: 22px;
+  }
+
+  .VoteLabel {
+    font-size: 9px;
   }
 
   .TopicTitle {
-    font-size: 20px;
+    font-size: 19px;
+  }
+
+  .TopicPreview {
+    font-size: 14px;
+  }
+
+  .Modal {
+    padding: 16px;
   }
 
   .ModalContent {
-    padding: 28px;
+    padding: 32px 24px;
   }
 
   .ModalTitle {
-    font-size: 26px;
+    font-size: 28px;
+    margin-bottom: 24px;
   }
 
   .TopicDetail {
@@ -741,16 +824,8 @@
   }
 
   .TopicDetailGrid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .VoteSection {
-    flex-direction: row;
-    justify-content: flex-start;
-    border-right: none;
-    border-bottom: 2px solid #f0f0f0;
-    padding: 0 0 12px 0;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
   }
 
   .TopicDetailContent {
@@ -758,7 +833,7 @@
   }
 
   .TopicDetailTitle {
-    font-size: 22px;
+    font-size: 24px;
   }
 
   .TopicBody {
@@ -766,10 +841,398 @@
   }
 
   .CommentsSection {
-    padding: 20px;
+    padding: 20px 24px;
   }
 
   .CommentsTitle {
+    font-size: 19px;
+  }
+
+  .CommentCard {
+    padding: 20px;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .Container {
+    padding: 80px 16px 32px;
+  }
+
+  .Container::before,
+  .Container::after {
+    opacity: 0.3;
+    width: 60%;
+    height: 50%;
+  }
+
+  .Header {
+    margin-bottom: 32px;
+  }
+
+  .Badge {
+    font-size: 10px;
+    padding: 6px 14px;
+    margin-bottom: 16px;
+  }
+
+  .Title {
+    font-size: 32px;
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+
+  .Subtitle {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .Actions {
+    margin-bottom: 24px;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .SortButtons {
+    gap: 8px;
+  }
+
+  .SortButton {
+    flex: 1;
+    font-size: 13px;
+    padding: 8px 16px;
+  }
+
+  .SortButton:hover {
+    transform: none;
+  }
+
+  .CreateButton {
+    font-size: 14px;
+    padding: 11px 20px;
+    width: auto;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .CreateButton:hover {
+    transform: none;
+  }
+
+  .Error {
+    font-size: 13px;
+    padding: 10px 14px;
+    margin-bottom: 20px;
+  }
+
+  .Loading {
+    padding: 40px 16px;
+    font-size: 16px;
+  }
+
+  .Empty {
+    padding: 48px 20px;
+    font-size: 15px;
+  }
+
+  .TopicsList {
+    gap: 16px;
+  }
+
+  .TopicCard {
+    padding: 20px;
+    gap: 14px;
+    border-radius: 12px;
+  }
+
+  .TopicCard:hover {
+    transform: translateY(-2px);
+  }
+
+  .TopicVotes {
+    padding: 10px 14px;
+    min-width: auto;
+    border-radius: 10px;
+  }
+
+  .TopicCard:hover .TopicVotes {
+    transform: none;
+  }
+
+  .VoteCount {
     font-size: 20px;
+  }
+
+  .VoteLabel {
+    font-size: 8px;
+    letter-spacing: 0.6px;
+  }
+
+  .TopicContent {
+    flex: 1;
+  }
+
+  .TopicTitle {
+    font-size: 17px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .TopicPreview {
+    font-size: 14px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  .TopicMeta {
+    font-size: 11px;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .Modal {
+    padding: 12px;
+  }
+
+  .ModalContent {
+    padding: 24px 20px;
+    border-radius: 20px;
+    max-height: 85vh;
+  }
+
+  .ModalTitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .InputGroup {
+    margin-bottom: 16px;
+  }
+
+  .Label {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .Input,
+  .Textarea {
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+
+  .Textarea {
+    min-height: 100px;
+  }
+
+  .ModalActions {
+    margin-top: 20px;
+    gap: 10px;
+  }
+
+  .CancelButton {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .SubmitButton {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  .SubmitButton:hover:not(:disabled) {
+    transform: none;
+  }
+
+  .BackLink {
+    font-size: 14px;
+    margin-bottom: 20px;
+    padding: 8px 0;
+  }
+
+  .TopicDetail {
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+  }
+
+  .TopicDetailGrid {
+    gap: 16px;
+  }
+
+
+  .TopicDetailContent {
+    gap: 14px;
+  }
+
+  .TopicHeader {
+    gap: 10px;
+  }
+
+  .TopicDetailTitle {
+    font-size: 22px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .TopicMeta {
+    font-size: 12px;
+  }
+
+  .TopicBody {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .TopicText {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .CommentsSection {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .CommentsTitle {
+    font-size: 19px;
+    margin-bottom: 20px;
+  }
+
+  .CommentForm {
+    margin-bottom: 24px;
+  }
+
+  .CommentInput {
+    padding: 12px 16px;
+    font-size: 15px;
+    margin-bottom: 14px;
+    border-radius: 12px;
+    min-height: 100px;
+  }
+
+  .SubmitButton {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  .SubmitButton:hover:not(:disabled) {
+    transform: none;
+  }
+
+  .LoginPrompt {
+    padding: 18px;
+    font-size: 14px;
+  }
+
+  .Empty {
+    padding: 24px 20px;
+    font-size: 14px;
+  }
+
+  .CommentsList {
+    gap: 12px;
+  }
+
+  .CommentCard {
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .CommentHeader {
+    font-size: 12px;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .CommentContent {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 360px) {
+  .Container {
+    padding: 70px 12px 24px;
+  }
+
+  .Title {
+    font-size: 28px;
+  }
+
+  .Subtitle {
+    font-size: 14px;
+  }
+
+  .SortButton {
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+
+  .CreateButton {
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+
+  .TopicsList {
+    gap: 14px;
+  }
+
+  .TopicCard {
+    padding: 18px;
+  }
+
+  .TopicVotes {
+    padding: 8px 12px;
+  }
+
+  .TopicTitle {
+    font-size: 16px;
+    margin-bottom: 7px;
+  }
+
+  .TopicPreview {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+  .ModalContent {
+    padding: 20px 16px;
+  }
+
+  .ModalTitle {
+    font-size: 22px;
+  }
+
+  .BackLink {
+    font-size: 13px;
+  }
+
+  .TopicDetail {
+    padding: 18px;
+  }
+
+  .TopicDetailTitle {
+    font-size: 20px;
+  }
+
+  .TopicBody {
+    padding: 14px;
+  }
+
+  .TopicText {
+    font-size: 14px;
+  }
+
+  .CommentsSection {
+    padding: 18px;
+  }
+
+  .CommentsTitle {
+    font-size: 18px;
+  }
+
+  .CommentInput {
+    padding: 10px 14px;
   }
 }

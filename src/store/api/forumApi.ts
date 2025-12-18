@@ -98,7 +98,7 @@ export const forumApi = createApi({
 
     voteTopic: builder.mutation<Topic, { topicId: string; userId: string; value: 1 | -1 }>({
       query: ({ topicId, userId, value }) => ({
-        url: `/forum/topics/${topicId}/vote`,
+        url: `/forum/topics/${topicId}`,
         method: "PATCH",
         body: { userId, topicId, value },
       }),

@@ -192,14 +192,26 @@ const TopicDetailPage: React.FC = () => {
 
         <div className={styles.TopicDetail}>
           <div className={styles.TopicDetailGrid}>
-            <div className={styles.VoteSection}>
-              <button onClick={() => handleVote(1)} className={styles.VoteButton} disabled={!user}>
-                ↑
-              </button>
-              <span className={styles.VoteCount}>{topic.votes}</span>
-              <button onClick={() => handleVote(-1)} className={styles.VoteButton} disabled={!user}>
-                ↓
-              </button>
+            <div className={styles.ActionRow}>
+              <div className={styles.VoteSection}>
+                <button type="button" onClick={() => handleVote(1)} className={styles.VoteButton} disabled={!user}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 15l-6-6-6 6"/>
+                  </svg>
+                </button>
+                <span className={styles.VoteCount}>{topic.votes}</span>
+                <button type="button" onClick={() => handleVote(-1)} className={styles.VoteButton} disabled={!user}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M6 9l6 6 6-6"/>
+                  </svg>
+                </button>
+              </div>
+              <div className={styles.CommentCount}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+                <span>{comments.length}</span>
+              </div>
             </div>
             <div className={styles.TopicDetailContent}>
               <div className={styles.TopicHeader}>
@@ -217,8 +229,6 @@ const TopicDetailPage: React.FC = () => {
         </div>
 
         <div className={styles.CommentsSection}>
-          <h2 className={styles.CommentsTitle}>Comments ({comments.length})</h2>
-
           <form onSubmit={handlePostComment} className={styles.CommentForm}>
             <textarea
               value={newComment}

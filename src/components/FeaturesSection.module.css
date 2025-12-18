@@ -151,17 +151,95 @@
   }
 }
 
-/* Add extra horizontal breathing room for cards on mobile only */
+/* Mobile responsive styles */
 @media (max-width: 767px) {
+  .features {
+    padding: 60px 16px;
+  }
+
+  .leftContent {
+    padding: 0 8px;
+  }
+
+  .heading {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    margin-bottom: 32px;
+    padding: 0 8px;
+  }
+
   .featuresGrid {
     box-sizing: border-box;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 8px;
+    padding-right: 8px;
     margin-left: 0;
     margin-right: 0;
+    gap: 16px;
   }
+
   .featureItem {
-    padding: 24px 20px;
+    padding: 20px 16px;
+    border-radius: 12px;
+  }
+
+  .featureItem:hover {
+    transform: none;
+  }
+
+  .featureTitle {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .featureDescription {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .image {
+    max-width: 280px;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 380px) {
+  .features {
+    padding: 48px 12px;
+  }
+
+  .heading {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  .featuresGrid {
+    gap: 12px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .featureItem {
+    padding: 16px 14px;
+  }
+
+  .featureTitle {
+    font-size: 15px;
+  }
+
+  .featureDescription {
+    font-size: 12px;
+  }
+
+  .image {
+    max-width: 240px;
   }
 }
 

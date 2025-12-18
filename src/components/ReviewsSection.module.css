@@ -218,7 +218,86 @@
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .reviewItem {
-    flex: 0 0 280px; /* Adjusted for smaller screens */
-    padding: 35px 20px;
+    flex: 0 0 240px;
+    padding: 20px 16px;
+    min-height: 160px;
+    border-radius: 12px;
+  }
+
+  .itemSm {
+    flex: 0 0 200px;
+    min-height: 140px;
+    padding: 16px 14px;
+  }
+
+  .itemMd {
+    flex: 0 0 240px;
+    min-height: 160px;
+    padding: 18px 16px;
+  }
+
+  .itemLg {
+    flex: 0 0 280px;
+    min-height: 170px;
+    padding: 20px 18px;
+  }
+
+  .reviewContent {
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .reviews {
+    padding: 32px 12px;
+  }
+
+  .header {
+    margin-bottom: 24px;
+  }
+
+  .display {
+    font-size: 28px;
+  }
+
+  .subtagline {
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  .track {
+    gap: 12px;
+  }
+
+  .reviewItem {
+    flex: 0 0 200px;
+    padding: 16px 14px;
+    min-height: 130px;
+    border-radius: 10px;
+  }
+
+  .itemSm {
+    flex: 0 0 170px;
+    min-height: 110px;
+    padding: 14px 12px;
+  }
+
+  .itemMd {
+    flex: 0 0 200px;
+    min-height: 130px;
+    padding: 16px 14px;
+  }
+
+  .itemLg {
+    flex: 0 0 230px;
+    min-height: 140px;
+    padding: 18px 16px;
+  }
+
+  .reviewContent {
+    font-size: 12px;
+    line-height: 1.45;
   }
 }
