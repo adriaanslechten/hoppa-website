@@ -168,6 +168,7 @@
 
 .FeaturedImageInner {
   object-fit: cover;
+  object-position: center top;
 }
 
 /* Table of Contents */
