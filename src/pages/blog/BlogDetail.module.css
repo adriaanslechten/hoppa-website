@@ -260,6 +260,22 @@
   background-color: rgba(192, 132, 252, 0.1);
 }
 
+/* Footnote References */
+.Content :global(.footnote-ref) {
+  font-size: 0.65em;
+  font-weight: 500;
+  color: #c084fc;
+  vertical-align: super;
+  line-height: 0;
+  margin-left: 1px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.Content :global(.footnote-ref):hover {
+  color: #a855f7;
+}
+
 /* Style for actual Pull Quotes */
 .PullQuote {
   border: none;

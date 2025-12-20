@@ -4,6 +4,8 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import { visit } from "unist-util-visit";
 import {
   useGetArticleBySlugQuery,
   useGetRelatedArticlesQuery,
@@ -11,6 +13,58 @@ import {
 } from "../../store/api/blogApi";
 import { ArticleCard } from "../../components/blog/ArticleCard";
 import styles from "./BlogDetail.module.css";
+
+// Remark plugin to transform [1], [2], etc. into footnote elements
+function remarkFootnotes() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (tree: any) => {
+    visit(tree, "text", (node, index, parent) => {
+      const footnoteRegex = /\[(\d+)\]/g;
+      const text = node.value as string;
+
+      if (!footnoteRegex.test(text)) return;
+
+      // Reset regex
+      footnoteRegex.lastIndex = 0;
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const newNodes: any[] = [];
+      let lastIndex = 0;
+      let match;
+
+      while ((match = footnoteRegex.exec(text)) !== null) {
+        // Add text before the match
+        if (match.index > lastIndex) {
+          newNodes.push({
+            type: "text",
+            value: text.slice(lastIndex, match.index),
+          });
+        }
+
+        // Add the footnote as HTML
+        newNodes.push({
+          type: "html",
+          value: `<sup class="footnote-ref" data-footnote="${match[1]}">${match[1]}</sup>`,
+        });
+
+        lastIndex = match.index + match[0].length;
+      }
+
+      // Add remaining text
+      if (lastIndex < text.length) {
+        newNodes.push({
+          type: "text",
+          value: text.slice(lastIndex),
+        });
+      }
+
+      if (newNodes.length > 0 && parent && index !== undefined) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (parent as any).children.splice(index, 1, ...newNodes);
+      }
+    });
+  };
+}
 
 // Helper to check for specific content in ReactNode
 const isAtAGlance = (children: ReactNode): boolean => {
@@ -127,6 +181,22 @@ const BlogDetailPage: React.FC = () => {
       incrementViews(article.id);
     }
   }, [article?.id, incrementViews]);
+
+  // Add click handlers for footnotes
+  useEffect(() => {
+    const handleFootnoteClick = (e: Event) => {
+      const target = e.target as HTMLElement;
+      if (target.classList.contains('footnote-ref')) {
+        const sourcesSection = document.querySelector('[class*="Sources"]');
+        if (sourcesSection) {
+          sourcesSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
+    document.addEventListener('click', handleFootnoteClick);
+    return () => document.removeEventListener('click', handleFootnoteClick);
+  }, []);
 
   const error = queryError ? "Failed to load article. Please try again." : null;
 
@@ -311,6 +381,8 @@ const BlogDetailPage: React.FC = () => {
 
                       <div className={styles.Content}>
                         <ReactMarkdown
+                          remarkPlugins={[remarkFootnotes]}
+                          rehypePlugins={[rehypeRaw]}
                           components={{
                             h1: ({ node, ...props }) => <h1 id={props.children?.toString().toLowerCase().replace(/\s+/g, '-')} {...props} />,
                             h2: ({ node, ...props }) => <h2 id={props.children?.toString().toLowerCase().replace(/\s+/g, '-')} {...props} />,
