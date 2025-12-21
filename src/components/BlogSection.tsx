@@ -7,23 +7,6 @@ import styles from "./BlogSection.module.css";
 const BlogSection: React.FC = () => {
   const { data: articles = [], isLoading } = useGetLatestArticlesQuery(3);
 
-  // Convert BlogArticle to ArticleListItem format for ArticleCard
-  const articleListItems = articles.map((article) => ({
-    id: article.id,
-    title: article.title,
-    slug: article.slug,
-    excerpt: article.excerpt,
-    category: article.category,
-    tags: article.tags,
-    status: article.status,
-    publishedAt: article.publishedAt,
-    featured: article.featured,
-    readingTime: article.readingTime,
-    views: article.views,
-    likes: article.likes,
-    image: article.images?.thumbnail?.url || article.images?.featured?.url,
-  }));
-
   return (
     <section className={styles.section} aria-labelledby="blog-heading">
       <div className={styles.container}>
@@ -39,11 +22,11 @@ const BlogSection: React.FC = () => {
 
         {isLoading ? (
           <div className={styles.loading}>Loading articles...</div>
-        ) : articleListItems.length === 0 ? (
+        ) : articles.length === 0 ? (
           <div className={styles.empty}>No articles yet. Check back soon!</div>
         ) : (
           <div className={styles.grid}>
-            {articleListItems.map((article) => (
+            {articles.map((article) => (
               <ArticleCard key={article.id} article={article} />
             ))}
           </div>

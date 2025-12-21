@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   BlogArticle,
+  ArticleListItem,
   PaginatedArticlesResponse,
   GetArticlesParams,
   CategoryCount,
@@ -52,7 +53,7 @@ export const blogApi = createApi({
     }),
 
     // Get latest articles
-    getLatestArticles: builder.query<BlogArticle[], number | void>({
+    getLatestArticles: builder.query<ArticleListItem[], number | void>({
       query: (limit) => ({
         url: "/blog/articles/latest",
         params: limit ? { limit } : undefined,
