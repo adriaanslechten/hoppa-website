@@ -1,12 +1,20 @@
 import React, { useState } from "react";
+import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useGetTopicsQuery, useCreateTopicMutation } from "../../store/api/forumApi";
 import { TopicCard } from "../../components/forum/TopicCard";
+import { Topic } from "../../types/forum";
 import styles from "./Forum.module.css";
 
-const ForumListPage: React.FC = () => {
+const API_URL = process.env.API_URL;
+
+interface ForumListPageProps {
+  initialTopics: Topic[];
+}
+
+const ForumListPage: React.FC<ForumListPageProps> = ({ initialTopics }) => {
   const router = useRouter();
   const { user, loading: authLoading } = useAuthContext();
   const [sort, setSort] = useState<"new" | "hot" | "top">("new");
@@ -14,19 +22,18 @@ const ForumListPage: React.FC = () => {
   const [newTopicTitle, setNewTopicTitle] = useState("");
   const [newTopicContent, setNewTopicContent] = useState("");
 
-  // Redirect to login if not authenticated
-  React.useEffect(() => {
-    if (!authLoading && !user) {
-      router.push("/login");
-    }
-  }, [authLoading, user, router]);
-
-  // RTK Query hooks - automatic loading, error, and data management!
-  const { data: topics = [], isLoading: loading, error: queryError } = useGetTopicsQuery({ sort, limit: 50 });
+  // Only fetch client-side when user changes sort (not default "new")
+  const shouldFetch = sort !== "new";
+  const {
+    data: fetchedTopics,
+    isLoading: loading,
+    error: queryError,
+  } = useGetTopicsQuery({ sort, limit: 50 }, { skip: !shouldFetch });
 
   const [createTopic, { isLoading: creating }] = useCreateTopicMutation();
 
-  // Convert RTK Query error to string
+  // Use initial SSG data or fetched data based on sort
+  const topics = shouldFetch ? (fetchedTopics || []) : initialTopics;
   const error = queryError ? "Failed to load topics. Please try again." : null;
 
   const handleCreateTopic = async (e: React.FormEvent) => {
@@ -37,7 +44,6 @@ const ForumListPage: React.FC = () => {
     }
 
     try {
-      // RTK Query mutation - automatically updates cache!
       await createTopic({
         userId: user.uid,
         title: newTopicTitle,
@@ -47,16 +53,18 @@ const ForumListPage: React.FC = () => {
       setNewTopicTitle("");
       setNewTopicContent("");
       setShowCreateModal(false);
-      // No need to manually reload - RTK Query invalidates cache automatically!
-    } catch (err: any) {
+    } catch (err) {
       console.error("Error creating topic:", err);
     }
   };
 
-  // Show loading while checking auth or redirecting
-  if (authLoading || !user) {
-    return <div className={styles.Loading}>Loading...</div>;
-  }
+  const handleCreateClick = () => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+    setShowCreateModal(true);
+  };
 
   // SEO: Generate structured data for forum
   const structuredData = {
@@ -85,7 +93,6 @@ const ForumListPage: React.FC = () => {
   return (
     <>
       <Head>
-        {/* Primary Meta Tags */}
         <title>Hoppa Community Forum | Fitness Discussion & Tips</title>
         <meta name="title" content="Hoppa Community Forum | Fitness Discussion & Tips" />
         <meta
@@ -98,7 +105,6 @@ const ForumListPage: React.FC = () => {
         />
         <link rel="canonical" href="https://hoppa.fit/forum" />
 
-        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://hoppa.fit/forum" />
         <meta property="og:title" content="Hoppa Community Forum | Fitness Discussion & Tips" />
@@ -109,7 +115,6 @@ const ForumListPage: React.FC = () => {
         <meta property="og:image" content="https://hoppa.fit/forum-og-image.jpg" />
         <meta property="og:site_name" content="Hoppa" />
 
-        {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://hoppa.fit/forum" />
         <meta property="twitter:title" content="Hoppa Community Forum | Fitness Discussion & Tips" />
@@ -119,7 +124,6 @@ const ForumListPage: React.FC = () => {
         />
         <meta property="twitter:image" content="https://hoppa.fit/forum-og-image.jpg" />
 
-        {/* Structured Data */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       </Head>
 
@@ -151,16 +155,14 @@ const ForumListPage: React.FC = () => {
               Top
             </button>
           </div>
-          {user && (
-            <button onClick={() => setShowCreateModal(true)} className={styles.CreateButton}>
-              Create Topic
-            </button>
-          )}
+          <button onClick={handleCreateClick} className={styles.CreateButton}>
+            {user ? "Create Topic" : "Login to Create Topic"}
+          </button>
         </div>
 
         {error && <div className={styles.Error}>{error}</div>}
 
-        {loading ? (
+        {shouldFetch && loading ? (
           <div className={styles.Loading}>Loading topics...</div>
         ) : topics.length === 0 ? (
           <div className={styles.Empty}>
@@ -231,3 +233,27 @@ const ForumListPage: React.FC = () => {
 };
 
 export default ForumListPage;
+
+// Fetch initial topics at build time with ISR
+export const getStaticProps: GetStaticProps<ForumListPageProps> = async () => {
+  try {
+    const response = await fetch(`${API_URL}/forum/topics?sort=new&limit=50`);
+    const topics = await response.json();
+
+    return {
+      props: {
+        initialTopics: topics || [],
+      },
+      // Revalidate every 60 seconds
+      revalidate: 60,
+    };
+  } catch (error) {
+    console.error("Error fetching forum topics:", error);
+    return {
+      props: {
+        initialTopics: [],
+      },
+      revalidate: 30, // Retry sooner on error
+    };
+  }
+};

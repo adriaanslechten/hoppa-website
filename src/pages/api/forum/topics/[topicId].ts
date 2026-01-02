@@ -25,11 +25,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (req.method === "GET") {
-      // Get topic details
-      const response = await axios.get(`${API_URL}/topics/topicDetails`, {
-        params: { topicId },
-        headers,
-      });
+      // Get topic details - use public endpoint (no auth required)
+      const response = await axios.get(`${API_URL}/forum/topics/${topicId}`);
       return res.status(200).json(response.data);
     } else if (req.method === "PATCH") {
       // Update topic or vote

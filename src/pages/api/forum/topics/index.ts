@@ -20,10 +20,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (req.method === "GET") {
-      // List topics
-      const response = await axios.get(`${API_URL}/topics`, {
+      // List topics - use public endpoint (no auth required)
+      const response = await axios.get(`${API_URL}/forum/topics`, {
         params: req.query,
-        headers,
       });
       return res.status(200).json(response.data);
     } else if (req.method === "POST") {

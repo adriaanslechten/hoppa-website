@@ -20,11 +20,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (req.method === "GET") {
-      // Get comments for a topic
-      const response = await axios.get(`${API_URL}/comments/topic`, {
-        params: req.query,
-        headers,
-      });
+      // Get comments for a topic - use public endpoint (no auth required)
+      const { topicId } = req.query;
+      const response = await axios.get(`${API_URL}/forum/topics/${topicId}/comments`);
       return res.status(200).json(response.data);
     } else if (req.method === "POST") {
       // Create comment
