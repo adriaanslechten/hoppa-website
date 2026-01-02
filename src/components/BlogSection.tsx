@@ -2,10 +2,21 @@ import React from "react";
 import Link from "next/link";
 import { useGetLatestArticlesQuery } from "../store/api/blogApi";
 import { ArticleCard } from "./blog/ArticleCard";
+import { ArticleListItem } from "../types/blog";
 import styles from "./BlogSection.module.css";
 
-const BlogSection: React.FC = () => {
-  const { data: articles = [], isLoading } = useGetLatestArticlesQuery(3);
+interface BlogSectionProps {
+  initialArticles?: ArticleListItem[];
+}
+
+const BlogSection: React.FC<BlogSectionProps> = ({ initialArticles }) => {
+  // Only fetch client-side if no initial data was provided (SSR fallback)
+  const shouldFetch = !initialArticles || initialArticles.length === 0;
+  const { data: fetchedArticles = [], isLoading } = useGetLatestArticlesQuery(3, {
+    skip: !shouldFetch,
+  });
+
+  const articles = initialArticles && initialArticles.length > 0 ? initialArticles : fetchedArticles;
 
   return (
     <section className={styles.section} aria-labelledby="blog-heading">
@@ -20,7 +31,7 @@ const BlogSection: React.FC = () => {
           </p>
         </div>
 
-        {isLoading ? (
+        {shouldFetch && isLoading ? (
           <div className={styles.loading}>Loading articles...</div>
         ) : articles.length === 0 ? (
           <div className={styles.empty}>No articles yet. Check back soon!</div>

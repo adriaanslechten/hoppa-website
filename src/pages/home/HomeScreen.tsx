@@ -8,15 +8,20 @@ import BlogSection from "../../components/BlogSection";
 import CTASection from "../../components/CTASection";
 import ReviewsSection from "../../components/ReviewSection";
 import FooterSection from "../../components/FooterSection";
+import { ArticleListItem } from "../../types/blog";
 
-export const HomeScreen: React.FC = () => {
+interface HomeScreenProps {
+  initialArticles?: ArticleListItem[];
+}
+
+export const HomeScreen: React.FC<HomeScreenProps> = ({ initialArticles }) => {
   return (
     <>
       <HeroSection />
       <AppOverviewSection />
       <FeaturesSection />
       <PricingSection />
-      <BlogSection />
+      <BlogSection initialArticles={initialArticles} />
       <CTASection />
       <ReviewsSection />
       <FooterSection />
