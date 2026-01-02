@@ -1,18 +1,17 @@
-import React, { useEffect, ReactNode } from "react";
-import { useRouter } from "next/router";
+import React, { useEffect, ReactNode, useState } from "react";
+import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { visit } from "unist-util-visit";
-import {
-  useGetArticleBySlugQuery,
-  useGetRelatedArticlesQuery,
-  useIncrementViewsMutation,
-} from "../../store/api/blogApi";
+import { useIncrementViewsMutation } from "../../store/api/blogApi";
 import { ArticleCard } from "../../components/blog/ArticleCard";
+import { BlogArticle } from "../../types/blog";
 import styles from "./BlogDetail.module.css";
+
+const API_URL = process.env.API_URL;
 
 // Remark plugin to transform [1], [2], etc. into footnote elements
 function remarkFootnotes() {
@@ -92,23 +91,12 @@ const isAtAGlance = (children: ReactNode): boolean => {
   return checkNode(children);
 };
 
-const BlogDetailPage: React.FC = () => {
-  const router = useRouter();
-  const { slug } = router.query;
+interface BlogDetailPageProps {
+  article: BlogArticle | null;
+  relatedArticles: BlogArticle[];
+}
 
-  const {
-    data: article,
-    isLoading: loading,
-    error: queryError,
-  } = useGetArticleBySlugQuery(slug as string, {
-    skip: !slug,
-  });
-
-  const { data: relatedArticles = [] } = useGetRelatedArticlesQuery(
-    { id: article?.id || "", limit: 3 },
-    { skip: !article?.id }
-  );
-
+const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ article, relatedArticles }) => {
   const [incrementViews] = useIncrementViewsMutation();
 
   // Local state for parsed content and sources
@@ -175,12 +163,16 @@ const BlogDetailPage: React.FC = () => {
     setDisplayTakeaways(takeaways);
   }, [article]);
 
-  // Increment view count on page load
+  // Increment view count on page load (debounced per session)
   useEffect(() => {
-    if (article?.id) {
-      incrementViews(article.id);
+    if (article?.id && typeof window !== "undefined") {
+      const viewedKey = `blog_viewed_${article.slug}`;
+      if (!sessionStorage.getItem(viewedKey)) {
+        incrementViews(article.id);
+        sessionStorage.setItem(viewedKey, "true");
+      }
     }
-  }, [article?.id, incrementViews]);
+  }, [article?.id, article?.slug, incrementViews]);
 
   // Add click handlers for footnotes
   useEffect(() => {
@@ -198,7 +190,7 @@ const BlogDetailPage: React.FC = () => {
     return () => document.removeEventListener('click', handleFootnoteClick);
   }, []);
 
-  const error = queryError ? "Failed to load article. Please try again." : null;
+  // No error state needed - SSG handles this at build time
 
   const formatDate = (dateString?: string) => {
     if (!dateString) return "";
@@ -258,57 +250,58 @@ const BlogDetailPage: React.FC = () => {
         }
       : null;
 
-  if (!slug) {
-    return <div className={styles.Loading}>Loading...</div>;
+  // Article not found - this shouldn't happen with proper fallback handling
+  if (!article) {
+    return (
+      <div className={styles.Container}>
+        <div className={styles.Error}>Article not found.</div>
+      </div>
+    );
   }
 
   return (
     <>
       <Head>
-        {article && (
-          <>
-            <title>{article.seo?.title || article.title} | Hoppa Blog</title>
-            <meta name="title" content={article.seo?.title || article.title} />
-            <meta name="description" content={article.seo?.description || article.excerpt} />
-            <meta name="keywords" content={article.seo?.keywords?.join(", ") || article.tags?.join(", ")} />
-            <link rel="canonical" href={`https://hoppa.fit/blog/${article.slug}`} />
+        <title>{article.seo?.title || article.title} | Hoppa Blog</title>
+        <meta name="title" content={article.seo?.title || article.title} />
+        <meta name="description" content={article.seo?.description || article.excerpt} />
+        <meta name="keywords" content={article.seo?.keywords?.join(", ") || article.tags?.join(", ")} />
+        <link rel="canonical" href={`https://hoppa.fit/blog/${article.slug}`} />
 
-            <meta property="og:type" content="article" />
-            <meta property="og:url" content={`https://hoppa.fit/blog/${article.slug}`} />
-            <meta property="og:title" content={article.seo?.ogTitle || article.title} />
-            <meta property="og:description" content={article.seo?.ogDescription || article.excerpt} />
-            <meta
-              property="og:image"
-              content={article.images?.social?.url || article.images?.featured?.url || "https://hoppa.fit/blog-og.jpg"}
-            />
-            <meta property="og:site_name" content="Hoppa" />
-            <meta property="article:published_time" content={article.publishedAt} />
-            <meta property="article:modified_time" content={article.updatedAt} />
-            <meta property="article:author" content={article.author.name} />
-            <meta property="article:section" content={article.category} />
-            {article.tags?.map((tag: string) => (
-              <meta key={tag} property="article:tag" content={tag} />
-            ))}
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://hoppa.fit/blog/${article.slug}`} />
+        <meta property="og:title" content={article.seo?.ogTitle || article.title} />
+        <meta property="og:description" content={article.seo?.ogDescription || article.excerpt} />
+        <meta
+          property="og:image"
+          content={article.images?.social?.url || article.images?.featured?.url || "https://hoppa.fit/blog-og.jpg"}
+        />
+        <meta property="og:site_name" content="Hoppa" />
+        <meta property="article:published_time" content={article.publishedAt} />
+        <meta property="article:modified_time" content={article.updatedAt} />
+        <meta property="article:author" content={article.author.name} />
+        <meta property="article:section" content={article.category} />
+        {article.tags?.map((tag: string) => (
+          <meta key={tag} property="article:tag" content={tag} />
+        ))}
 
-            <meta property="twitter:card" content={article.seo?.twitterCard || "summary_large_image"} />
-            <meta property="twitter:url" content={`https://hoppa.fit/blog/${article.slug}`} />
-            <meta property="twitter:title" content={article.seo?.ogTitle || article.title} />
-            <meta property="twitter:description" content={article.seo?.ogDescription || article.excerpt} />
-            <meta
-              property="twitter:image"
-              content={article.images?.social?.url || article.images?.featured?.url || "https://hoppa.fit/blog-og.jpg"}
-            />
+        <meta property="twitter:card" content={article.seo?.twitterCard || "summary_large_image"} />
+        <meta property="twitter:url" content={`https://hoppa.fit/blog/${article.slug}`} />
+        <meta property="twitter:title" content={article.seo?.ogTitle || article.title} />
+        <meta property="twitter:description" content={article.seo?.ogDescription || article.excerpt} />
+        <meta
+          property="twitter:image"
+          content={article.images?.social?.url || article.images?.featured?.url || "https://hoppa.fit/blog-og.jpg"}
+        />
 
-            {structuredData && (
-              <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-            )}
-            {faqStructuredData && (
-              <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
-              />
-            )}
-          </>
+        {structuredData && (
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+        )}
+        {faqStructuredData && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
+          />
         )}
       </Head>
 
@@ -317,15 +310,7 @@ const BlogDetailPage: React.FC = () => {
           Back to Blog
         </Link>
 
-        {error && <div className={styles.Error}>{error}</div>}
-
-        {loading ? (
-          <div className={styles.Loading}>Loading article...</div>
-        ) : !article ? (
-          <div className={styles.Error}>Article not found.</div>
-        ) : (
-          <>
-            <article className={styles.Article}>
+        <article className={styles.Article}>
               <header className={styles.ArticleHeader}>
                 <div className={styles.Meta}>
                   <span className={styles.Category}>{article.category}</span>
@@ -500,11 +485,73 @@ const BlogDetailPage: React.FC = () => {
                 </div>
               </section>
             )}
-          </>
-        )}
       </div>
     </>
   );
 };
 
 export default BlogDetailPage;
+
+// Fetch all article slugs for static generation
+export const getStaticPaths: GetStaticPaths = async () => {
+  try {
+    // Fetch all published articles to pre-render
+    const response = await fetch(`${API_URL}/blog/articles?limit=100`);
+    const data = await response.json();
+
+    const paths = data.items?.map((article: { slug: string }) => ({
+      params: { slug: article.slug },
+    })) || [];
+
+    return {
+      paths,
+      // Enable ISR for new articles not in the initial build
+      fallback: "blocking",
+    };
+  } catch (error) {
+    console.error("Error fetching article paths:", error);
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
+};
+
+// Fetch article data at build time with ISR
+export const getStaticProps: GetStaticProps<BlogDetailPageProps> = async ({ params }) => {
+  const slug = params?.slug as string;
+
+  try {
+    // Fetch article
+    const articleResponse = await fetch(`${API_URL}/blog/articles/slug/${slug}`);
+
+    if (!articleResponse.ok) {
+      return { notFound: true };
+    }
+
+    const article = await articleResponse.json();
+
+    // Fetch related articles
+    let relatedArticles: BlogArticle[] = [];
+    try {
+      const relatedResponse = await fetch(`${API_URL}/blog/articles/${article.id}/related?limit=3`);
+      if (relatedResponse.ok) {
+        relatedArticles = await relatedResponse.json();
+      }
+    } catch {
+      // Related articles are optional, continue without them
+    }
+
+    return {
+      props: {
+        article,
+        relatedArticles,
+      },
+      // Revalidate every hour (3600 seconds)
+      revalidate: 3600,
+    };
+  } catch (error) {
+    console.error("Error fetching article:", error);
+    return { notFound: true };
+  }
+};

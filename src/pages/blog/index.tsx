@@ -1,31 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import { useGetArticlesQuery, useGetCategoriesQuery } from "../../store/api/blogApi";
 import { ArticleCard } from "../../components/blog/ArticleCard";
-import { SortBy, SortOrder } from "../../types/blog";
+import { SortBy, SortOrder, ArticleListItem, CategoryCount, PaginationInfo } from "../../types/blog";
 import styles from "./Blog.module.css";
 
-const BlogListPage: React.FC = () => {
+const API_URL = process.env.API_URL;
+
+interface BlogListPageProps {
+  initialArticles: ArticleListItem[];
+  initialPagination: PaginationInfo | null;
+  initialCategories: CategoryCount[];
+}
+
+const BlogListPage: React.FC<BlogListPageProps> = ({
+  initialArticles,
+  initialPagination,
+  initialCategories,
+}) => {
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
   const [sortBy, setSortBy] = useState<SortBy>(SortBy.PUBLISHED_AT);
   const [page, setPage] = useState(1);
+
+  // Only use RTK Query when user interacts (filters/sorts/paginates)
+  const shouldFetch = selectedCategory !== undefined || sortBy !== SortBy.PUBLISHED_AT || page !== 1;
 
   const {
     data: articlesData,
     isLoading: loading,
     error: queryError,
-  } = useGetArticlesQuery({
-    category: selectedCategory,
-    sortBy,
-    sortOrder: SortOrder.DESC,
-    page,
-    limit: 12,
+  } = useGetArticlesQuery(
+    {
+      category: selectedCategory,
+      sortBy,
+      sortOrder: SortOrder.DESC,
+      page,
+      limit: 12,
+    },
+    { skip: !shouldFetch }
+  );
+
+  const { data: fetchedCategories } = useGetCategoriesQuery(undefined, {
+    skip: initialCategories.length > 0,
   });
 
-  const { data: categories = [] } = useGetCategoriesQuery();
-
-  const articles = articlesData?.items || [];
-  const pagination = articlesData?.pagination;
+  // Use initial data or fetched data
+  const articles = shouldFetch ? (articlesData?.items || []) : initialArticles;
+  const pagination = shouldFetch ? articlesData?.pagination : initialPagination;
+  const categories = fetchedCategories || initialCategories;
   const error = queryError ? "Failed to load articles. Please try again." : null;
 
   const structuredData = {
@@ -168,3 +191,38 @@ const BlogListPage: React.FC = () => {
 };
 
 export default BlogListPage;
+
+// Fetch initial data at build time with ISR
+export const getStaticProps: GetStaticProps<BlogListPageProps> = async () => {
+  try {
+    // Fetch initial articles (first page, sorted by published date)
+    const articlesResponse = await fetch(
+      `${API_URL}/blog/articles?sortBy=publishedAt&sortOrder=desc&page=1&limit=12`
+    );
+    const articlesData = await articlesResponse.json();
+
+    // Fetch categories
+    const categoriesResponse = await fetch(`${API_URL}/blog/articles/categories`);
+    const categories = await categoriesResponse.json();
+
+    return {
+      props: {
+        initialArticles: articlesData.items || [],
+        initialPagination: articlesData.pagination || null,
+        initialCategories: categories || [],
+      },
+      // Revalidate every 5 minutes (300 seconds)
+      revalidate: 300,
+    };
+  } catch (error) {
+    console.error("Error fetching blog data:", error);
+    return {
+      props: {
+        initialArticles: [],
+        initialPagination: null,
+        initialCategories: [],
+      },
+      revalidate: 60, // Retry sooner on error
+    };
+  }
+};
