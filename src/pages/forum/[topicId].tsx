@@ -326,8 +326,8 @@ export const getStaticProps: GetStaticProps<TopicDetailPageProps> = async ({ par
         initialTopic: topic,
         initialComments: comments,
       },
-      // Revalidate every 60 seconds
-      revalidate: 60,
+      // Revalidate every 5 minutes
+      revalidate: 300,
     };
   } catch (error) {
     console.error("Error fetching topic:", error);

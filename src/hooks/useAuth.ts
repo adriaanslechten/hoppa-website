@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -8,9 +8,10 @@ import {
   sendPasswordResetEmail,
   onAuthStateChanged,
   User,
-  UserCredential,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { setUserId, setUserProperties } from "../analytics";
+import { trackSignIn, trackSignUp, trackSignOut } from "../analytics/events";
 
 interface AuthError {
   code: string;
@@ -21,11 +22,27 @@ export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const previousUserRef = useRef<User | null>(null);
 
   // Listen to auth state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      const previousUser = previousUserRef.current;
+
+      // Update analytics user ID when auth state changes
+      if (currentUser && !previousUser) {
+        // User signed in
+        setUserId(currentUser.uid);
+        setUserProperties({
+          signup_platform: "web",
+        });
+      } else if (!currentUser && previousUser) {
+        // User signed out
+        setUserId(null);
+      }
+
+      previousUserRef.current = currentUser;
+      setUser(currentUser);
       setLoading(false);
     });
 
@@ -62,6 +79,7 @@ export const useAuth = () => {
       try {
         setError(null);
         await signInWithEmailAndPassword(auth, email, password);
+        trackSignIn("email");
         return true;
       } catch (err) {
         const errorMessage = handleAuthError(err as AuthError);
@@ -78,6 +96,7 @@ export const useAuth = () => {
       try {
         setError(null);
         await createUserWithEmailAndPassword(auth, email, password);
+        trackSignUp("email");
         return true;
       } catch (err) {
         const errorMessage = handleAuthError(err as AuthError);
@@ -94,6 +113,7 @@ export const useAuth = () => {
       setError(null);
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
+      trackSignIn("google");
       return true;
     } catch (err) {
       const errorMessage = handleAuthError(err as AuthError);
@@ -122,6 +142,7 @@ export const useAuth = () => {
   const logout = useCallback(async (): Promise<boolean> => {
     try {
       setError(null);
+      trackSignOut();
       await signOut(auth);
       return true;
     } catch (err) {

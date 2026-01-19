@@ -11,6 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^2.33.4",
     "@netlify/functions": "^5.1.2",
     "@reduxjs/toolkit": "^2.9.2",
     "axios": "^1.12.2",

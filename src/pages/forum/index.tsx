@@ -244,8 +244,8 @@ export const getStaticProps: GetStaticProps<ForumListPageProps> = async () => {
       props: {
         initialTopics: topics || [],
       },
-      // Revalidate every 60 seconds
-      revalidate: 60,
+      // Revalidate every 5 minutes
+      revalidate: 300,
     };
   } catch (error) {
     console.error("Error fetching forum topics:", error);
@@ -253,7 +253,7 @@ export const getStaticProps: GetStaticProps<ForumListPageProps> = async () => {
       props: {
         initialTopics: [],
       },
-      revalidate: 30, // Retry sooner on error
+      revalidate: 60, // Retry sooner on error
     };
   }
 };
