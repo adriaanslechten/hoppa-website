@@ -9,6 +9,7 @@ import { visit } from "unist-util-visit";
 import { useIncrementViewsMutation } from "../../store/api/blogApi";
 import { ArticleCard } from "../../components/blog/ArticleCard";
 import { BlogArticle } from "../../types/blog";
+import { trackBlogPostViewed } from "../../analytics/events";
 import styles from "./BlogDetail.module.css";
 
 const API_URL = process.env.API_URL;
@@ -170,9 +171,11 @@ const BlogDetailPage: React.FC<BlogDetailPageProps> = ({ article, relatedArticle
       if (!sessionStorage.getItem(viewedKey)) {
         incrementViews(article.id);
         sessionStorage.setItem(viewedKey, "true");
+        // Track blog post view in analytics
+        trackBlogPostViewed(article.slug, article.title);
       }
     }
-  }, [article?.id, article?.slug, incrementViews]);
+  }, [article?.id, article?.slug, article?.title, incrementViews]);
 
   // Add click handlers for footnotes
   useEffect(() => {

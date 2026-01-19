@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -13,6 +13,7 @@ import {
 import { getCommentDisplayName, formatDate } from "../../utils/forum";
 import { CommentCard } from "../../components/forum/CommentCard";
 import { Topic, Comment } from "../../types/forum";
+import { trackForumTopicViewed } from "../../analytics/events";
 import styles from "./Forum.module.css";
 
 const API_URL = process.env.API_URL;
@@ -51,6 +52,17 @@ const TopicDetailPage: React.FC<TopicDetailPageProps> = ({ initialTopic, initial
   const topic = initialTopic || fetchedTopic;
   const comments = initialComments.length > 0 ? initialComments : (fetchedComments || []);
   const error = topicError ? "Failed to load topic. Please try again." : null;
+
+  // Track forum topic view (once per session)
+  useEffect(() => {
+    if (topic?.id && typeof window !== "undefined") {
+      const viewedKey = `forum_viewed_${topic.id}`;
+      if (!sessionStorage.getItem(viewedKey)) {
+        trackForumTopicViewed(topic.id, topic.title);
+        sessionStorage.setItem(viewedKey, "true");
+      }
+    }
+  }, [topic?.id, topic?.title]);
 
   const handleVote = async (value: 1 | -1) => {
     if (!user || !topic) {
