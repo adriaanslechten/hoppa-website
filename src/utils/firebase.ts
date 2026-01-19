@@ -8,7 +8,9 @@ import {
   setUserId as firebaseSetUserId,
   setUserProperties as firebaseSetUserProperties,
 } from "firebase/analytics";
-import { GA_MEASUREMENT_ID } from "../analytics/config";
+
+// GA4 measurement ID for hoppa-website (separate from mobile app)
+const GA_MEASUREMENT_ID = "G-NP42ZGDLR1";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -22,7 +24,14 @@ const firebaseConfig = {
 
 // Initialize Firebase only if it hasn't been initialized already
 // This prevents errors during hot reloading in development
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+let app;
+if (getApps().length === 0) {
+  app = initializeApp(firebaseConfig);
+  console.log("[Firebase] Initialized NEW app with config:", JSON.stringify(firebaseConfig, null, 2));
+} else {
+  app = getApp();
+  console.log("[Firebase] Using EXISTING app, options:", JSON.stringify(app.options, null, 2));
+}
 const auth: Auth = getAuth(app);
 
 // Analytics instance (initialized lazily on client-side only)
@@ -38,7 +47,13 @@ export const initializeAnalytics = async (): Promise<Analytics | null> => {
   try {
     const supported = await isSupported();
     if (supported && !analytics) {
-      analytics = getAnalytics(app);
+      // Re-initialize Firebase app with measurementId if needed
+      // This ensures GA4 gets the correct measurement ID
+      const currentApp = getApps().length > 0 ? getApp() : null;
+      if (currentApp) {
+        analytics = getAnalytics(currentApp);
+        console.log("[Firebase Analytics] Initialized with app:", currentApp.options.measurementId);
+      }
     }
     return analytics;
   } catch (error) {

@@ -9,8 +9,8 @@
 export const AMPLITUDE_API_KEY =
   process.env.NEXT_PUBLIC_AMPLITUDE_API_KEY || "";
 
-// Firebase Analytics measurement ID (same as mobile app)
-export const GA_MEASUREMENT_ID = "G-CCY6EDV6VX";
+// Firebase Analytics measurement ID for hoppa-website (separate from mobile app)
+export const GA_MEASUREMENT_ID = "G-NP42ZGDLR1";
 
 // Platform identifier for cross-platform correlation
 export const PLATFORM = "web" as const;
