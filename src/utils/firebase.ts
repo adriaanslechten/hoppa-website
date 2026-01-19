@@ -10,7 +10,7 @@ import {
 } from "firebase/analytics";
 
 // GA4 measurement ID for hoppa-website (separate from mobile app)
-const GA_MEASUREMENT_ID = "G-NP42ZGDLR1";
+const GA_MEASUREMENT_ID = "G-NWNX10JXF3";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
